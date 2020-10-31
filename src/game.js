@@ -1,11 +1,12 @@
+//------GAME AREA------//
 
-var myGameArea = {
-    canvas: document.createElement("canvas"),
+let myGameArea = {
+    canvas: document.getElementById("canvas"),
     start: function () {
         this.canvas.width = 1000;
         this.canvas.height = 500;
         this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        // document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
         this.interval = setInterval(updateGameArea, 20);
         window.addEventListener('keydown', function (e) {
@@ -20,20 +21,25 @@ var myGameArea = {
     },
     stop: function () {
         clearInterval(this.interval);
+        alert('GAME OVER')
+    },
+    win: function (){
+        clearInterval(this.interval)
+        alert('YOU WIN')
     }
 }
 
-function everyinterval(n) {
-    if ((myGameArea.frameNo / n) % 1 == 0) { return true; }
-    return false;
-}
+
+//------MY VARIABLES------//
+
+let myGamePiece;
+let block1, block2, block3, block4, block5, block6
+// let myScore;
+let myBackground;
+let gameOver;
 
 
-
-var myGamePiece;
-var block1, block2, block3, block4, block5, block6
-var myScore;
-var myBackground;
+//------ELEMENTS------//
 
 function component(width, height, color, x, y, type) {
     this.type = type;
@@ -47,6 +53,7 @@ function component(width, height, color, x, y, type) {
     this.speedY = 0;
     this.x = x;
     this.y = y;
+    
     this.update = function () {
         ctx = myGameArea.context;
         if (this.type == "text") {
@@ -65,15 +72,15 @@ function component(width, height, color, x, y, type) {
         this.y += this.speedY * 2;
     }
     this.crashWith = function (otherobj) {
-        var myleft = this.x;
-        var myright = this.x + (this.width);
-        var mytop = this.y;
-        var mybottom = this.y + (this.height);
-        var otherleft = otherobj.x;
-        var otherright = otherobj.x + (otherobj.width);
-        var othertop = otherobj.y;
-        var otherbottom = otherobj.y + (otherobj.height);
-        var crash = true;
+        let myleft = this.x;
+        let myright = this.x + (this.width);
+        let mytop = this.y;
+        let mybottom = this.y + (this.height);
+        let otherleft = otherobj.x;
+        let otherright = otherobj.x + (otherobj.width);
+        let othertop = otherobj.y;
+        let otherbottom = otherobj.y + (otherobj.height);
+        let crash = true;
         if ((mybottom < othertop) ||
             (mytop > otherbottom) ||
             (myright < otherleft) ||
@@ -85,17 +92,22 @@ function component(width, height, color, x, y, type) {
 
 }
 
+
+//------FUNCTIONS------//
 function movePlayer() {
     myGamePiece.speedX = 0
     myGamePiece.speedY = 0
-    if (myGameArea.key && myGameArea.key == 37) { myGamePiece.speedX = -4; }
-    if (myGameArea.key && myGameArea.key == 39) { myGamePiece.speedX = 4; }
-    if (myGameArea.key && myGameArea.key == 38) { myGamePiece.speedY = -4; }
-    if (myGameArea.key && myGameArea.key == 40) { myGamePiece.speedY = 4; }
+    if (myGameArea.key && myGameArea.key == 37 && myGamePiece.x > 10) { myGamePiece.speedX = -4; }
+
+    if (myGameArea.key && myGameArea.key == 39 && myGamePiece.x < 930) { myGamePiece.speedX = 4; }
+
+    if (myGameArea.key && myGameArea.key == 38 && myGamePiece.y > 10) { myGamePiece.speedY = -4; }
+
+    if (myGameArea.key && myGameArea.key == 40 && myGamePiece.y < 430) { myGamePiece.speedY = 4; }
 }
 
-function moveBlocks(x) {
-    switch (x) {
+function moveBlocks(blockNum) {
+    switch (blockNum) {
         case '1': (block1.y < 500) ? (block1.y += 5) : (block1.y = -60); break;
         case '2': (block2.y < 500) ? (block2.y += 1) : (block2.y = -60); break;
         case '3': (block3.y < 500) ? (block3.y += 7) : (block3.y = -60); break;
@@ -105,130 +117,70 @@ function moveBlocks(x) {
     }
 }
 
-function updateGameArea() {
-    
+function checkObstacles() {
     if (myGamePiece.crashWith(block1) || myGamePiece.crashWith(block2) || myGamePiece.crashWith(block3) || myGamePiece.crashWith(block4) || myGamePiece.crashWith(block5) || myGamePiece.crashWith(block6)) {
         myGameArea.stop();
-    } else {
-        
-        myGameArea.clear();
-        myGameArea.frameNo += 1;
-        movePlayer()
-        myScore.text = "SCORE: " + myGameArea.frameNo;
-        myScore.update();
-        myGamePiece.newPos()
-        myBackground.update()
-        myGamePiece.update()
-        
+    } 
+}
 
-        moveBlocks('1')
-        moveBlocks('2')
-        moveBlocks('3')
-        moveBlocks('4')
-        moveBlocks('5')
-        moveBlocks('6')
-
-        block1.update();
-        block2.update();
-        block3.update();
-        block4.update();
-        block5.update();
-        block6.update();
-
-        
-        // myBackground.newPos();
-         
+function checkWinGame(){
+    if (myGamePiece.x >= 900){
+        myGameArea.win();
     }
 }
 
+//------UPDATES------//
+function updateGameArea() {
 
+    checkObstacles()
+    checkWinGame()
+
+    myGameArea.clear();
+    myGameArea.frameNo += 1;
+    
+    movePlayer()
+    moveBlocks('1')
+    moveBlocks('2')
+    moveBlocks('3')
+    moveBlocks('4')
+    moveBlocks('5')
+    moveBlocks('6')
+    
+    myGamePiece.newPos()
+    // checkWinGame()
+    myBackground.update()
+    // myScore.text = "SCORE: " + myGameArea.frameNo;
+    // myScore.update();
+    myGamePiece.update()
+    block1.update();
+    block2.update();
+    block3.update();
+    block4.update();
+    block5.update();
+    block6.update();
+}
+
+//------START GAME------//
 function startGame() {
     myGameArea.start();
-    myBackground = new component (1000, 500, "#72F59D", 0, 0)
-    myGamePiece = new component(60, 60, "./images/yoshi.png", 10, 120, "image");
+    myBackground = new component(1000, 500, "#72F59D", 0, 0)
+    myGamePiece = new component(60, 60, "./images/yoshi.png", 10, 210, "image");
     block1 = new component(60, 60, "./images/cañon.png", 125, 0, "image");
     block2 = new component(60, 60, "./images/cañon.png", 250, 0, "image");
     block3 = new component(60, 60, "./images/cañon.png", 375, 0, "image");
     block4 = new component(60, 60, "./images/cañon.png", 500, 0, "image");
     block5 = new component(60, 60, "./images/cañon.png", 625, 0, "image");
     block6 = new component(60, 60, "./images/cañon.png", 750, 0, "image");
-    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+    // myScore = new component("30px", "Consolas", "black", 800, 40, "text");
 }
 
+// startGame()
 
-startGame()
-
-
-//.......FOR SPEED.....
-// function moveUp() {
-//     myGamePiece.speedY -= 1;
-// }
-
-// function moveDown() {
-//     myGamePiece.speedY += 1;
-// }
-
-// function moveLeft() {
-//     myGamePiece.speedX -= 1;
-// }
-
-// function moveRight() {
-//     myGamePiece.speedX += 1;
-// }
-
-// 
-
-
-// function movePlayer(){
-//     switch (direction) {
-//         case 'left':
-//             if (this.x <= 75){
-//                 return this.x -= 20
-//             } else {
-//                 this.x--
-//             }
-//             break;
-//         case 'right':
-//             if (this.x >= 900){
-//                 return this.x += 20
-//             }else {
-//                 this.x++ 
-//             }
-//             break;
-//         case 'up':
-//             if (this.y <= 75){
-//                 this.y -= 20
-//             } else {
-//                 this.y--
-//             }
-//             break;
-//         case 'down':
-//             if (this.y >= 500){
-//                 this.y -= 20
-//             } else {
-//                 this.y++
-//             }
-//         default:
-//             throw new Error('Invalid direction')
-//     }
-//     }
-
-
-// document.addEventListener('keydown', (event) => {
-//     switch (event.key) {
-//         case 'ArrowLeft':
-//             movePlayer('left')
-//             break;
-//         case 'ArrowRight':
-//             movePlayer('right')
-//             break;
-//         case 'ArrowUp':
-//             movePlayer('up')
-//             break;
-//         case 'ArrowDown':
-//             movePlayer('down')
-//     }
-// });
+window.onload = () => {
+    document.getElementById('start-button').onclick = () => {
+      startGame();
+    };
+  }
 
 
 
