@@ -1,9 +1,22 @@
 canvas {
-    /* border: 1px solid black; */
+    /* border: 3px solid #5C89DA; */
 }
 
 .game-intro{
     margin-top:40px;
     margin-bottom: 20px
+}
+
+body{
+    background-image: url("./images/fondo.webp");
+}
+
+
+#keys {
+    width: 100px;
+}
+
+#canon {
+    width: 70px;
 }
 
