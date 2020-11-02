@@ -7,6 +7,8 @@ levelUpText.style.visibility = "hidden"
 let winScreenText = document.getElementById("win-screen")
 winScreenText.style.visibility = "hidden"
 
+//----SOUNDS----//
+
 
 //------GAME AREA------//
 
@@ -32,6 +34,12 @@ let myGameArea = {
     stop: function () {
         clearInterval(this.interval);
         gameOverText.style.visibility = "visible"
+        this.clear()
+        document.getElementById('tryagain').onclick = () => {
+            gameOverSound.stop();
+            startGame();
+            gameOverText.style.visibility = "hidden"
+          };
     },
     levelUp: function (){
         clearInterval(this.interval);
@@ -44,6 +52,25 @@ let myGameArea = {
     }
 }
 
+let backgroundSound;
+let gameOverSound;
+let levelUpSound;
+let winnerSound;
+
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+      this.sound.play();
+    }
+    this.stop = function(){
+      this.sound.pause();
+    }
+  }
 
 //------MY VARIABLES------//
 
@@ -142,12 +169,16 @@ function moveObstacles(obstacleNum) {
 
 function checkCrash() {
     if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle5) || player.crashWith(obstacle6) || player.crashWith(obstacle7)) {
+        backgroundSound.stop();
+        gameOverSound.play();
         myGameArea.stop();
     } 
 }
 
 function checkGoal(){
     if (player.x >= 870){
+        backgroundSound.stop();
+        levelUpSound.play()
         myGameArea.levelUp();
     }
 }
@@ -188,12 +219,21 @@ function updateGameArea() {
     upDateComponents()
 }
 
+
+
 //------START GAME------//
 
 function startGame() {
     levelUpText.style.visibility = "hidden"
     gameOverText.style.visibility = "hidden"
     winScreenText.style.visibility = "hidden"
+    clearInterval(myGameArea.interval);
+    backgroundSound = new sound("/sounds/background-sound.mp3");
+    gameOverSound = new sound("/sounds/game-over-sound.mp3");
+    levelUpSound = new sound("/sounds/level-up-sound.mp3");
+    winnerSound = new sound("/sounds/winner-sound.mp3");
+    backgroundSound.currentTime = 0; 
+    backgroundSound.play()
     myGameArea.start();
     myBackground = new component(1000, 500, "/images/GameWallpaper.png", 0, 0, "image");
     player = new component(60, 60, "/images/marioFlyRight.png", 10, 400, "image");
@@ -242,11 +282,18 @@ window.onload = () => {
     stop: function () {
         clearInterval(this.interval);
         gameOverText.style.visibility = "visible"
+        this.clear()
+        document.getElementById('tryagain').onclick = () => {
+            gameOverSound.stop();
+            startLevel2();
+            gameOverText.style.visibility = "hidden"
+          };
     },
     levelUp: function (){
         clearInterval(this.interval);
         levelUpText.style.visibility = "visible"
         document.getElementById('continue').onclick = () => {
+            levelUpSound.stop()
             startLevel3();
             levelUpText.style.visibility = "hidden"
           };
@@ -293,6 +340,8 @@ function moveObstacles2(obstacleNum) {
 
 function checkCrash2() {
     if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle5) || player.crashWith(obstacle6) || player.crashWith(obstacle7)) {
+        backgroundSound.stop()
+        gameOverSound.play()
         myGameArea2.stop();
     } 
 }
@@ -300,6 +349,8 @@ function checkCrash2() {
 
 function checkGoal2(){
     if (player.x >= 870){
+        backgroundSound.stop()
+        levelUpSound.play()
         myGameArea2.levelUp();
     }
 }
@@ -315,6 +366,11 @@ function updateGameArea2() {
 
 
 function startLevel2() {
+    backgroundSound = new sound("/sounds/background-sound.mp3");
+    gameOverSound = new sound("/sounds/game-over-sound.mp3");
+    levelUpSound = new sound("/sounds/level-up-sound.mp3");
+    backgroundSound.currentTime = 0; 
+    backgroundSound.play()
     myGameArea2.start();
     myBackground = new component(1000, 500, "/images/GameWallpaper.png", 0, 0, "image");
     player = new component(60, 60, "/images/marioFlyRight.png", 10, 400, "image");
@@ -353,12 +409,19 @@ function startLevel2() {
     stop: function () {
         clearInterval(this.interval);
         gameOverText.style.visibility = "visible"
+        this.clear()
+        document.getElementById('tryagain').onclick = () => {
+            gameOverSound.stop();
+            startLevel3();
+            gameOverText.style.visibility = "hidden"
+          };
     },
     levelUp: function (){
         clearInterval(this.interval);
         levelUpText.style.visibility = "visible"
         this.clear()
         document.getElementById('continue').onclick = () => {
+            levelUpSound.stop()
             startLevelFinal();
             levelUpText.style.visibility = "hidden"
           };
@@ -393,18 +456,20 @@ function upDatePositions3 (){
 
 function moveObstacles3(obstacleNum) {
     switch (obstacleNum) {
-        case '1': (obstacle1.y > -150) ? (obstacle1.y -= 6) : (obstacle1.y = 450); break;
+        case '1': (obstacle1.y > -150) ? (obstacle1.y -= 7) : (obstacle1.y = 450); break;
         case '2': (obstacle2.y < 500) ? (obstacle2.y += 9) : (obstacle2.y = -150); break;
-        case '3': (obstacle3.y < 500) ? (obstacle3.y += 5) : (obstacle3.y = -150); break;
-        case '4': (obstacle4.y > -150) ? (obstacle4.y -= 7) : (obstacle4.y = 450); break;
-        case '5': (obstacle5.y < 500) ? (obstacle5.y += 6) : (obstacle5.y = -150); break;
-        case '6': (obstacle6.y < 500) ? (obstacle6.y += 9) : (obstacle6.y = -150); break;
-        case '7': (obstacle7.y > -150) ? (obstacle7.y -= 9) : (obstacle7.y = 450);
+        case '3': (obstacle3.y < 500) ? (obstacle3.y += 6) : (obstacle3.y = -150); break;
+        case '4': (obstacle4.y > -150) ? (obstacle4.y -= 9) : (obstacle4.y = 450); break;
+        case '5': (obstacle5.y < 500) ? (obstacle5.y += 7) : (obstacle5.y = -150); break;
+        case '6': (obstacle6.y < 500) ? (obstacle6.y += 10) : (obstacle6.y = -150); break;
+        case '7': (obstacle7.y > -150) ? (obstacle7.y -= 10) : (obstacle7.y = 450);
     }
 }
 
 function checkCrash3() {
     if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle5) || player.crashWith(obstacle6) || player.crashWith(obstacle7)) {
+        backgroundSound.stop();
+        gameOverSound.play();
         myGameArea3.stop();
     } 
 }
@@ -412,6 +477,8 @@ function checkCrash3() {
 
 function checkGoal3(){
     if (player.x >= 870){
+        backgroundSound.stop();
+        levelUpSound.play()
         myGameArea3.levelUp();
     }
 }
@@ -427,6 +494,11 @@ function updateGameArea3() {
 
 
 function startLevel3() {
+    backgroundSound = new sound("/sounds/background-sound.mp3");
+    gameOverSound = new sound("/sounds/game-over-sound.mp3");
+    levelUpSound = new sound("/sounds/level-up-sound.mp3");
+    backgroundSound.currentTime = 0; 
+    backgroundSound.play()
     myGameArea3.start();
     myBackground = new component(1000, 500, "/images/GameWallpaper.png", 0, 0, "image");
     player = new component(60, 60, "/images/marioFlyRight.png", 10, 400, "image");
@@ -463,6 +535,12 @@ let myGameAreaFinal = {
     stop: function () {
         clearInterval(this.interval);
         gameOverText.style.visibility = "visible"
+        this.clear()
+        document.getElementById('tryagain').onclick = () => {
+            gameOverSound.stop()
+            startLevelFinal();
+            gameOverText.style.visibility = "hidden"
+          };
     },
     win: function (){
         clearInterval(this.interval)
@@ -520,6 +598,8 @@ function moveObstaclesFinal(obstacleNum) {
 
 function checkCrashFinal() {
     if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle2b) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle4b) || player.crashWith(obstacle5) || player.crashWith(obstacle6) || player.crashWith(obstacle7) || player.crashWith(obstacle7)) {
+        backgroundSound.stop();
+        gameOverSound.play();
         myGameAreaFinal.stop();
     } 
 }
@@ -527,6 +607,8 @@ function checkCrashFinal() {
 
 function checkGoalFinal(){
     if (player.x >= 870){
+        backgroundSound.stop();
+        winnerSound.play()
         myGameAreaFinal.win();
     }
 }
@@ -542,6 +624,12 @@ function updateGameAreaFinal() {
 
 
 function startLevelFinal() {
+    backgroundSound = new sound("/sounds/background-sound.mp3");
+    gameOverSound = new sound("/sounds/game-over-sound.mp3");
+    levelUpSound = new sound("/sounds/level-up-sound.mp3");
+    winnerSound = new sound("/sounds/winner-sound.mp3")
+    backgroundSound.currentTime = 0; 
+    backgroundSound.play()
     myGameAreaFinal.start();
     myBackground = new component(1000, 500, "/images/bowserScene.jpg", 0, 0, "image");
     player = new component(60, 60, "/images/marioFlyRight.png", 10, 400, "image");
