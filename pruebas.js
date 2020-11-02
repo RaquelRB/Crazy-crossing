@@ -10,6 +10,7 @@ winScreenText.style.visibility = "hidden"
 
 //------GAME AREA------//
 
+
 let myGameArea = {
     canvas: document.getElementById("canvas"),
     start: function () {
@@ -36,8 +37,10 @@ let myGameArea = {
         clearInterval(this.interval);
         levelUpText.style.visibility = "visible"
         this.clear()
-        startLevel2()
-        levelUpText.style.visibility = "hidden"
+        document.getElementById('continue').onclick = () => {
+            startLevel2();
+            levelUpText.style.visibility = "hidden"
+          };
     }
 }
 
@@ -45,7 +48,7 @@ let myGameArea = {
 //------MY VARIABLES------//
 
 let player;
-let obstacle1, obstacle2, obstacle3, obstacle4, obstacle5, obstacle6
+let obstacle1, obstacle2, obstacle3, obstacle4, obstacle5, obstacle6, obstacle7;
 let myBackground;
 
 
@@ -132,18 +135,19 @@ function moveObstacles(obstacleNum) {
         case '3': (obstacle3.y < 500) ? (obstacle3.y += 5) : (obstacle3.y = -60); break;
         case '4': (obstacle4.y > -60) ? (obstacle4.y -= 7) : (obstacle4.y = 540); break;
         case '5': (obstacle5.y < 500) ? (obstacle5.y += 6) : (obstacle5.y = -60); break;
-        case '6': (obstacle6.y < 500) ? (obstacle6.y += 9) : (obstacle6.y = -60);
+        case '6': (obstacle6.y < 500) ? (obstacle6.y += 9) : (obstacle6.y = -60); break;
+        case '7': (obstacle7.y > -60) ? (obstacle7.y -= 9) : (obstacle7.y = 540);
     }
 }
 
 function checkCrash() {
-    if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle5) || player.crashWith(obstacle6)) {
+    if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle5) || player.crashWith(obstacle6) || player.crashWith(obstacle7)) {
         myGameArea.stop();
     } 
 }
 
 function checkGoal(){
-    if (player.x >= 900){
+    if (player.x >= 870){
         myGameArea.levelUp();
     }
 }
@@ -160,6 +164,7 @@ function upDateComponents(){
     obstacle4.update();
     obstacle5.update();
     obstacle6.update();
+    obstacle7.update();
 }
 
 function upDatePositions (){
@@ -170,6 +175,8 @@ function upDatePositions (){
     moveObstacles('4')
     moveObstacles('5')
     moveObstacles('6')
+    moveObstacles('7')
+
 }
 
 function updateGameArea() {
@@ -188,14 +195,15 @@ function startGame() {
     gameOverText.style.visibility = "hidden"
     winScreenText.style.visibility = "hidden"
     myGameArea.start();
-    myBackground = new component(1000, 500, "/images/fondo3.png", 0, 0, "image");
-    player = new component(60, 60, "/images/marioFlyRight.png", 10, 210, "image");
-    obstacle1 = new component(60, 60, "./images/canonL1Up.png", 125, 400, "image");
-    obstacle2 = new component(60, 60, "./images/canonL1Down.png", 250, 0, "image");
-    obstacle3 = new component(60, 60, "./images/canonL1Down.png", 375, 0, "image");
-    obstacle4 = new component(60, 60, "./images/canonL1Up.png", 500, 0, "image");
-    obstacle5 = new component(60, 60, "./images/canonL1Down.png", 625, 0, "image");
-    obstacle6 = new component(60, 60, "./images/canonL1Down.png", 750, 0, "image");
+    myBackground = new component(1000, 500, "/images/GameWallpaper.png", 0, 0, "image");
+    player = new component(60, 60, "/images/marioFlyRight.png", 10, 400, "image");
+    obstacle1 = new component(50, 60, "./images/canonL1Up.png", 160, 0, "image");
+    obstacle2 = new component(50, 60, "./images/canonL1Down.png", 265, 0, "image");
+    obstacle3 = new component(50, 60, "./images/canonL1Down.png", 370, 0, "image");
+    obstacle4 = new component(50, 60, "./images/canonL1Up.png", 475, 0, "image");
+    obstacle5 = new component(50, 60, "./images/canonL1Down.png", 580, 0, "image");
+    obstacle6 = new component(50, 60, "./images/canonL1Down.png", 685, 0, "image");
+    obstacle7 = new component(50, 60, "./images/canonL1Up.png", 790, 0, "image");
 }
 
 
@@ -209,7 +217,6 @@ window.onload = () => {
 
 
   //------------------------------LEVEL 2--------------------------------//
-
 
 
   //------GAME AREA - Level 2------//
@@ -236,9 +243,13 @@ window.onload = () => {
         clearInterval(this.interval);
         gameOverText.style.visibility = "visible"
     },
-    win: function (){
-        clearInterval(this.interval)
-        winScreenText.style.visibility = "visible"
+    levelUp: function (){
+        clearInterval(this.interval);
+        levelUpText.style.visibility = "visible"
+        document.getElementById('continue').onclick = () => {
+            startLevel3();
+            levelUpText.style.visibility = "hidden"
+          };
     }
 }
 
@@ -254,6 +265,7 @@ function upDateComponents2(){
     obstacle4.update();
     obstacle5.update();
     obstacle6.update();
+    obstacle7.update();
 }
 
 function upDatePositions2 (){
@@ -264,6 +276,7 @@ function upDatePositions2 (){
     moveObstacles2('4')
     moveObstacles2('5')
     moveObstacles2('6')
+    moveObstacles2('7')
 }
 
 function moveObstacles2(obstacleNum) {
@@ -273,20 +286,21 @@ function moveObstacles2(obstacleNum) {
         case '3': (obstacle3.y < 500) ? (obstacle3.y += 6) : (obstacle3.y = -60); break;
         case '4': (obstacle4.y > -60) ? (obstacle4.y -= 8) : (obstacle4.y = 540); break;
         case '5': (obstacle5.y < 500) ? (obstacle5.y += 7) : (obstacle5.y = -60); break;
-        case '6': (obstacle6.y < 500) ? (obstacle6.y += 10) : (obstacle6.y = -60);
+        case '6': (obstacle6.y < 500) ? (obstacle6.y += 10) : (obstacle6.y = -60); break;
+        case '7': (obstacle7.y > -60) ? (obstacle7.y -= 10) : (obstacle7.y = 540);
     }
 }
 
 function checkCrash2() {
-    if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle5) || player.crashWith(obstacle6)) {
+    if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle5) || player.crashWith(obstacle6) || player.crashWith(obstacle7)) {
         myGameArea2.stop();
     } 
 }
 
 
 function checkGoal2(){
-    if (player.x >= 900){
-        myGameArea2.win();
+    if (player.x >= 870){
+        myGameArea2.levelUp();
     }
 }
 
@@ -302,14 +316,243 @@ function updateGameArea2() {
 
 function startLevel2() {
     myGameArea2.start();
-    myBackground = new component(1000, 500, "/images/fondo3.Level2.png", 0, 0, "image");
-    player = new component(60, 60, "/images/marioFlyRight.png", 10, 210, "image");
-    obstacle1 = new component(60, 60, "./images/canonL2Up.png", 125, 400, "image");
-    obstacle2 = new component(60, 60, "./images/canonL2Down.png", 250, 0, "image");
-    obstacle3 = new component(60, 60, "./images/canonL2Down.png", 375, 0, "image");
-    obstacle4 = new component(60, 60, "./images/canonL2Up.png", 500, 0, "image");
-    obstacle5 = new component(60, 60, "./images/canonL2Down.png", 625, 0, "image");
-    obstacle6 = new component(60, 60, "./images/canonL2Down.png", 750, 0, "image");
+    myBackground = new component(1000, 500, "/images/GameWallpaper.png", 0, 0, "image");
+    player = new component(60, 60, "/images/marioFlyRight.png", 10, 400, "image");
+    obstacle1 = new component(50, 60, "./images/canonL2Up.png", 160, 0, "image");
+    obstacle2 = new component(50, 60, "./images/canonL2Down.png", 265, 0, "image");
+    obstacle3 = new component(50, 60, "./images/canonL2Down.png", 370, 0, "image");
+    obstacle4 = new component(50, 60, "./images/canonL2Up.png", 475, 0, "image");
+    obstacle5 = new component(50, 60, "./images/canonL2Down.png", 580, 0, "image");
+    obstacle6 = new component(50, 60, "./images/canonL2Down.png", 685, 0, "image");
+    obstacle7 = new component(50, 60, "./images/canonL2Up.png", 790, 0, "image");
+}
+
+  //------------------------------LEVEL 3--------------------------------//
+
+
+  //------GAME AREA - Level 3------//
+
+  let myGameArea3 = {
+    canvas: document.getElementById("canvas"),
+    start: function () {
+        this.canvas.width = 1000;
+        this.canvas.height = 500;
+        this.context = this.canvas.getContext("2d");
+        this.frameNo = 0;
+        this.interval = setInterval(updateGameArea3, 20);
+        window.addEventListener('keydown', function (e) {
+            myGameArea.key = e.keyCode;
+        })
+        window.addEventListener('keyup', function (e) {
+            myGameArea.key = false;
+        })
+    },
+    clear: function () {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    stop: function () {
+        clearInterval(this.interval);
+        gameOverText.style.visibility = "visible"
+    },
+    levelUp: function (){
+        clearInterval(this.interval);
+        levelUpText.style.visibility = "visible"
+        this.clear()
+        document.getElementById('continue').onclick = () => {
+            startLevelFinal();
+            levelUpText.style.visibility = "hidden"
+          };
+    }
+}
+
+//------UPDATES - Level 3------//
+
+function upDateComponents3(){
+    myBackground.newPos(); myBackground.update()
+    player.newPos()
+    player.update()
+    obstacle1.update();
+    obstacle2.update();
+    obstacle3.update();
+    obstacle4.update();
+    obstacle5.update();
+    obstacle6.update();
+    obstacle7.update();
+}
+
+function upDatePositions3 (){
+    movePlayer(); 
+    moveObstacles3('1')
+    moveObstacles3('2')
+    moveObstacles3('3')
+    moveObstacles3('4')
+    moveObstacles3('5')
+    moveObstacles3('6')
+    moveObstacles3('7')
+}
+
+function moveObstacles3(obstacleNum) {
+    switch (obstacleNum) {
+        case '1': (obstacle1.y > -150) ? (obstacle1.y -= 6) : (obstacle1.y = 450); break;
+        case '2': (obstacle2.y < 500) ? (obstacle2.y += 9) : (obstacle2.y = -150); break;
+        case '3': (obstacle3.y < 500) ? (obstacle3.y += 5) : (obstacle3.y = -150); break;
+        case '4': (obstacle4.y > -150) ? (obstacle4.y -= 7) : (obstacle4.y = 450); break;
+        case '5': (obstacle5.y < 500) ? (obstacle5.y += 6) : (obstacle5.y = -150); break;
+        case '6': (obstacle6.y < 500) ? (obstacle6.y += 9) : (obstacle6.y = -150); break;
+        case '7': (obstacle7.y > -150) ? (obstacle7.y -= 9) : (obstacle7.y = 450);
+    }
+}
+
+function checkCrash3() {
+    if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle5) || player.crashWith(obstacle6) || player.crashWith(obstacle7)) {
+        myGameArea3.stop();
+    } 
 }
 
 
+function checkGoal3(){
+    if (player.x >= 870){
+        myGameArea3.levelUp();
+    }
+}
+
+function updateGameArea3() {
+    checkCrash3()
+    checkGoal3()
+    myGameArea3.clear();
+    myGameArea3.frameNo += 1; 
+    upDatePositions3()
+    upDateComponents3()
+}
+
+
+function startLevel3() {
+    myGameArea3.start();
+    myBackground = new component(1000, 500, "/images/GameWallpaper.png", 0, 0, "image");
+    player = new component(60, 60, "/images/marioFlyRight.png", 10, 400, "image");
+    obstacle1 = new component(70, 150, "./images/plantUp.png", 160, 0, "image");
+    obstacle2 = new component(70, 150, "./images/plantDown.png", 265, 0, "image");
+    obstacle3 = new component(70, 150, "./images/plantDown.png", 370, 0, "image");
+    obstacle4 = new component(70, 150, "./images/plantUp.png", 475, 0, "image");
+    obstacle5 = new component(70, 150, "./images/plantDown.png", 580, 0, "image");
+    obstacle6 = new component(70, 150, "./images/plantDown.png", 685, 0, "image");
+    obstacle7 = new component(70, 150, "./images/plantUp.png", 790, 0, "image");
+}
+
+
+//------------------------------FINAL LEVEL--------------------------------//
+
+let myGameAreaFinal = {
+    canvas: document.getElementById("canvas"),
+    start: function () {
+        this.canvas.width = 1000;
+        this.canvas.height = 500;
+        this.context = this.canvas.getContext("2d");
+        this.frameNo = 0;
+        this.interval = setInterval(updateGameAreaFinal, 20);
+        window.addEventListener('keydown', function (e) {
+            myGameArea.key = e.keyCode;
+        })
+        window.addEventListener('keyup', function (e) {
+            myGameArea.key = false;
+        })
+    },
+    clear: function () {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    stop: function () {
+        clearInterval(this.interval);
+        gameOverText.style.visibility = "visible"
+    },
+    win: function (){
+        clearInterval(this.interval)
+        this.clear()
+        winScreenText.style.visibility = "visible"
+    }
+}
+
+//------UPDATES - FINAL LEVEL------//
+
+function upDateComponentsFinal(){
+    myBackground.newPos(); myBackground.update()
+    player.newPos()
+    player.update()
+    obstacle1.update();
+    obstacle2.update();
+    obstacle2b.update();
+    obstacle3.update();
+    obstacle4.update();
+    obstacle4b.update();
+    obstacle5.update();
+    obstacle6.update();
+    obstacle7.update();
+    obstacle7b.update();
+}
+
+function upDatePositionsFinal (){
+    movePlayer(); 
+    moveObstaclesFinal('1')
+    moveObstaclesFinal('2')
+    moveObstaclesFinal('2b')
+    moveObstaclesFinal('3')
+    moveObstaclesFinal('4')
+    moveObstaclesFinal('4b')
+    moveObstaclesFinal('5')
+    moveObstaclesFinal('6')
+    moveObstaclesFinal('7')
+    moveObstaclesFinal('7b')
+}
+
+function moveObstaclesFinal(obstacleNum) {
+    switch (obstacleNum) {
+        case '1': (obstacle1.y > -50) ? (obstacle1.y -= 7) : (obstacle1.y = 540); break;
+        case '2': (obstacle2.y < 500) ? (obstacle2.y += 10) : (obstacle2.y = -50); break;
+        case '2b': (obstacle2b.y < 500) ? (obstacle2b.y += 10) : (obstacle2b.y = -50); break;
+        case '3': (obstacle3.y < 500) ? (obstacle3.y += 6) : (obstacle3.y = -50); break;
+        case '4': (obstacle4.y > -50) ? (obstacle4.y -= 8) : (obstacle4.y = 540); break;
+        case '4b': (obstacle4b.y > -50) ? (obstacle4b.y -= 8) : (obstacle4b.y = 540); break;
+        case '5': (obstacle5.y < 500) ? (obstacle5.y += 7) : (obstacle5.y = -50); break;
+        case '6': (obstacle6.y < 500) ? (obstacle6.y += 10) : (obstacle6.y = -50); break;
+        case '7': (obstacle7.y > -50) ? (obstacle7.y -= 10) : (obstacle7.y = 540); break;
+        case '7b': (obstacle7b.y > -50) ? (obstacle7b.y -= 10) : (obstacle7b.y = 540);
+    }
+}
+
+function checkCrashFinal() {
+    if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle2b) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle4b) || player.crashWith(obstacle5) || player.crashWith(obstacle6) || player.crashWith(obstacle7) || player.crashWith(obstacle7)) {
+        myGameAreaFinal.stop();
+    } 
+}
+
+
+function checkGoalFinal(){
+    if (player.x >= 870){
+        myGameAreaFinal.win();
+    }
+}
+
+function updateGameAreaFinal() {
+    checkCrashFinal()
+    checkGoalFinal()
+    myGameAreaFinal.clear();
+    myGameAreaFinal.frameNo += 1; 
+    upDatePositionsFinal()
+    upDateComponentsFinal()
+}
+
+
+function startLevelFinal() {
+    myGameAreaFinal.start();
+    myBackground = new component(1000, 500, "/images/bowserScene.jpg", 0, 0, "image");
+    player = new component(60, 60, "/images/marioFlyRight.png", 10, 400, "image");
+    obstacle1 = new component(50, 60, "./images/fireUP.png", 160, 0, "image");
+    obstacle2 = new component(50, 60, "./images/fireDown.png", 265, 0, "image");
+    obstacle2b = new component(50, 60, "./images/fireDown.png", 265, 250, "image");
+    obstacle3 = new component(50, 60, "./images/fireDown.png", 370, 0, "image");
+    obstacle4 = new component(50, 60, "./images/fireUP.png", 475, 0, "image");
+    obstacle4b = new component(50, 60, "./images/fireUP.png", 475, 250, "image");
+    obstacle5 = new component(50, 60, "./images/fireDown.png", 580, 0, "image");
+    obstacle6 = new component(50, 60, "./images/fireDown.png", 685, 0, "image");
+    obstacle7 = new component(50, 60, "./images/fireUP.png", 790, 0, "image");
+    obstacle7b = new component(50, 60, "./images/fireUP.png", 790, 250, "image");
+}

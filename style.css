@@ -3,13 +3,12 @@ body{
 }
 
 .game-intro{
-    margin-top:40px;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
 body{
-    background-image: url("./images/fondo.webp");
-    
+    background-image: url("./images/Super_Mario.jpg!d");    
 }
 
 #keys {
