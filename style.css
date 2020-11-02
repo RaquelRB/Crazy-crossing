@@ -1,16 +1,16 @@
-canvas {
-    /* border: 3px solid #5C89DA; */
+body{
+    font-family: Courier New;
 }
 
 .game-intro{
     margin-top:40px;
-    margin-bottom: 20px
+    margin-bottom: 20px;
 }
 
 body{
     background-image: url("./images/fondo.webp");
+    
 }
-
 
 #keys {
     width: 100px;
@@ -19,4 +19,49 @@ body{
 #canon {
     width: 70px;
 }
+
+.container {
+    display: flex;
+    justify-content: center;
+    line-height: 60px;
+}
+
+.container p {
+    font-size: 22px;
+}
+
+
+.game-over {
+    position: absolute;
+    margin: 150px 0;
+    padding-top: 50px;
+    width: 500px;
+    height: 250px;
+    background-color: rgba(229, 233, 229, .9);
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+.level-up {
+    position: absolute;
+    margin: 150px 0;
+    padding-top: 50px;
+    width: 500px;
+    height: 250px;
+    background-color: rgba(229, 233, 229, .9);
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+.win-screen{
+    position: absolute;
+    margin: 150px 0;
+    padding-top: 50px;
+    width: 500px;
+    height: 250px;
+    background-color: rgba(229, 233, 229, .9);
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
 

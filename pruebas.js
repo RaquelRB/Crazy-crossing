@@ -1,3 +1,13 @@
+let gameOverText = document.getElementById("gameover")
+gameOverText.style.visibility = "hidden"
+
+let levelUpText = document.getElementById("level-up")
+levelUpText.style.visibility = "hidden"
+
+let winScreenText = document.getElementById("win-screen")
+winScreenText.style.visibility = "hidden"
+
+
 //------GAME AREA------//
 
 let myGameArea = {
@@ -20,11 +30,14 @@ let myGameArea = {
     },
     stop: function () {
         clearInterval(this.interval);
-        alert('YOU LOSE')
+        gameOverText.style.visibility = "visible"
     },
-    win: function (){
-        alert('LEVEL 1 completed!! Do you want to continue to level 2?')
+    levelUp: function (){
+        clearInterval(this.interval);
+        levelUpText.style.visibility = "visible"
+        this.clear()
         startLevel2()
+        levelUpText.style.visibility = "hidden"
     }
 }
 
@@ -131,7 +144,7 @@ function checkCrash() {
 
 function checkGoal(){
     if (player.x >= 900){
-        myGameArea.win();
+        myGameArea.levelUp();
     }
 }
 
@@ -171,15 +184,18 @@ function updateGameArea() {
 //------START GAME------//
 
 function startGame() {
+    levelUpText.style.visibility = "hidden"
+    gameOverText.style.visibility = "hidden"
+    winScreenText.style.visibility = "hidden"
     myGameArea.start();
     myBackground = new component(1000, 500, "/images/fondo3.png", 0, 0, "image");
     player = new component(60, 60, "/images/marioFlyRight.png", 10, 210, "image");
-    obstacle1 = new component(60, 60, "./images/canonUp.png", 125, 400, "image");
-    obstacle2 = new component(60, 60, "./images/canonDown.png", 250, 0, "image");
-    obstacle3 = new component(60, 60, "./images/canonDown.png", 375, 0, "image");
-    obstacle4 = new component(60, 60, "./images/canonUp.png", 500, 0, "image");
-    obstacle5 = new component(60, 60, "./images/canonDown.png", 625, 0, "image");
-    obstacle6 = new component(60, 60, "./images/canonDown.png", 750, 0, "image");
+    obstacle1 = new component(60, 60, "./images/canonL1Up.png", 125, 400, "image");
+    obstacle2 = new component(60, 60, "./images/canonL1Down.png", 250, 0, "image");
+    obstacle3 = new component(60, 60, "./images/canonL1Down.png", 375, 0, "image");
+    obstacle4 = new component(60, 60, "./images/canonL1Up.png", 500, 0, "image");
+    obstacle5 = new component(60, 60, "./images/canonL1Down.png", 625, 0, "image");
+    obstacle6 = new component(60, 60, "./images/canonL1Down.png", 750, 0, "image");
 }
 
 
@@ -192,11 +208,11 @@ window.onload = () => {
   }
 
 
-  //---LEVEL 2---//
+  //------------------------------LEVEL 2--------------------------------//
 
-  function startLevel2() {
-    startGame2()
-}
+
+
+  //------GAME AREA - Level 2------//
 
   let myGameArea2 = {
     canvas: document.getElementById("canvas"),
@@ -218,28 +234,19 @@ window.onload = () => {
     },
     stop: function () {
         clearInterval(this.interval);
-        alert('YOU LOSE')
+        gameOverText.style.visibility = "visible"
     },
     win: function (){
         clearInterval(this.interval)
-        alert('YOU WIN')
+        winScreenText.style.visibility = "visible"
     }
 }
 
-function startGame2() {
-    myGameArea2.start();
-    myBackground = new component(1000, 500, "/images/fondo3.png", 0, 0, "image");
-    player = new component(60, 60, "/images/marioFlyRight.png", 10, 210, "image");
-    obstacle1 = new component(90, 60, "./images/canonUp.png", 125, 400, "image");
-    obstacle2 = new component(60, 60, "./images/canonDown.png", 250, 0, "image");
-    obstacle3 = new component(60, 60, "./images/canonDown.png", 375, 0, "image");
-    obstacle4 = new component(60, 60, "./images/canonUp.png", 500, 0, "image");
-    obstacle5 = new component(60, 60, "./images/canonDown.png", 625, 0, "image");
-    obstacle6 = new component(60, 60, "./images/canonDown.png", 750, 0, "image");
-}
+//------UPDATES - Level 2------//
 
 function upDateComponents2(){
     myBackground.newPos(); myBackground.update()
+    player.newPos()
     player.update()
     obstacle1.update();
     obstacle2.update();
@@ -250,7 +257,7 @@ function upDateComponents2(){
 }
 
 function upDatePositions2 (){
-    movePlayer(); player.newPos()
+    movePlayer(); 
     moveObstacles2('1')
     moveObstacles2('2')
     moveObstacles2('3')
@@ -262,21 +269,47 @@ function upDatePositions2 (){
 function moveObstacles2(obstacleNum) {
     switch (obstacleNum) {
         case '1': (obstacle1.y > -60) ? (obstacle1.y -= 7) : (obstacle1.y = 540); break;
-        case '2': (obstacle2.y < 500) ? (obstacle2.y += 9) : (obstacle2.y = -60); break;
+        case '2': (obstacle2.y < 500) ? (obstacle2.y += 10) : (obstacle2.y = -60); break;
         case '3': (obstacle3.y < 500) ? (obstacle3.y += 6) : (obstacle3.y = -60); break;
         case '4': (obstacle4.y > -60) ? (obstacle4.y -= 8) : (obstacle4.y = 540); break;
         case '5': (obstacle5.y < 500) ? (obstacle5.y += 7) : (obstacle5.y = -60); break;
-        case '6': (obstacle6.y < 500) ? (obstacle6.y += 9) : (obstacle6.y = -60);
+        case '6': (obstacle6.y < 500) ? (obstacle6.y += 10) : (obstacle6.y = -60);
+    }
+}
+
+function checkCrash2() {
+    if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle5) || player.crashWith(obstacle6)) {
+        myGameArea2.stop();
+    } 
+}
+
+
+function checkGoal2(){
+    if (player.x >= 900){
+        myGameArea2.win();
     }
 }
 
 function updateGameArea2() {
-    checkCrash()
-    checkGoal()
+    checkCrash2()
+    checkGoal2()
     myGameArea2.clear();
     myGameArea2.frameNo += 1; 
     upDatePositions2()
     upDateComponents2()
+}
+
+
+function startLevel2() {
+    myGameArea2.start();
+    myBackground = new component(1000, 500, "/images/fondo3.Level2.png", 0, 0, "image");
+    player = new component(60, 60, "/images/marioFlyRight.png", 10, 210, "image");
+    obstacle1 = new component(60, 60, "./images/canonL2Up.png", 125, 400, "image");
+    obstacle2 = new component(60, 60, "./images/canonL2Down.png", 250, 0, "image");
+    obstacle3 = new component(60, 60, "./images/canonL2Down.png", 375, 0, "image");
+    obstacle4 = new component(60, 60, "./images/canonL2Up.png", 500, 0, "image");
+    obstacle5 = new component(60, 60, "./images/canonL2Down.png", 625, 0, "image");
+    obstacle6 = new component(60, 60, "./images/canonL2Down.png", 750, 0, "image");
 }
 
 

@@ -1,3 +1,13 @@
+let gameOverText = document.getElementById("gameover")
+gameOverText.style.visibility = "hidden"
+
+let levelUpText = document.getElementById("level-up")
+levelUpText.style.visibility = "hidden"
+
+let winScreenText = document.getElementById("win-screen")
+winScreenText.style.visibility = "hidden"
+
+
 //------GAME AREA------//
 
 let myGameArea = {
@@ -20,13 +30,16 @@ let myGameArea = {
     },
     stop: function () {
         clearInterval(this.interval);
-        alert('YOU LOSE')
+        gameOverText.style.visibility = "visible"
     },
     levelUp: function (){
-        // alert('LEVEL 1 completed!! Do you want to continue to level 2?')
         clearInterval(this.interval);
+        levelUpText.style.visibility = "visible"
         this.clear()
-        startLevel2()
+        document.getElementById('continue').onclick = () => {
+            startLevel2();
+            levelUpText.style.visibility = "hidden"
+          };
     }
 }
 
@@ -173,6 +186,9 @@ function updateGameArea() {
 //------START GAME------//
 
 function startGame() {
+    levelUpText.style.visibility = "hidden"
+    gameOverText.style.visibility = "hidden"
+    winScreenText.style.visibility = "hidden"
     myGameArea.start();
     myBackground = new component(1000, 500, "/images/fondo3.png", 0, 0, "image");
     player = new component(60, 60, "/images/marioFlyRight.png", 10, 210, "image");
@@ -220,11 +236,11 @@ window.onload = () => {
     },
     stop: function () {
         clearInterval(this.interval);
-        alert('YOU LOSE')
+        gameOverText.style.visibility = "visible"
     },
     win: function (){
         clearInterval(this.interval)
-        alert('YOU WIN')
+        winScreenText.style.visibility = "visible"
     }
 }
 
@@ -263,14 +279,21 @@ function moveObstacles2(obstacleNum) {
     }
 }
 
+function checkCrash2() {
+    if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle5) || player.crashWith(obstacle6)) {
+        myGameArea2.stop();
+    } 
+}
+
+
 function checkGoal2(){
     if (player.x >= 900){
-        myGameArea.win();
+        myGameArea2.win();
     }
 }
 
 function updateGameArea2() {
-    checkCrash()
+    checkCrash2()
     checkGoal2()
     myGameArea2.clear();
     myGameArea2.frameNo += 1; 
@@ -290,6 +313,7 @@ function startLevel2() {
     obstacle5 = new component(60, 60, "./images/canonL2Down.png", 625, 0, "image");
     obstacle6 = new component(60, 60, "./images/canonL2Down.png", 750, 0, "image");
 }
+
 
 
 
