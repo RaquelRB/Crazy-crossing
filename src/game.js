@@ -725,34 +725,34 @@ let finalBackGroundImg = new Image()
 finalBackGroundImg.src = "./images/fondoFinal.png"
 
 let L4obstacle1Img = new Image()
-L4obstacle1Img.src = "./images/fireUP.png"
+L4obstacle1Img.src = "./images/fireUp2.png"
 
 let L4obstacle2Img = new Image()
-L4obstacle2Img.src = "./images/fireDown.png"
+L4obstacle2Img.src = "./images/fireDown2.png"
 
 let L4obstacle2bImg = new Image()
-L4obstacle2bImg.src = "./images/fireDown.png"
+L4obstacle2bImg.src = "./images/fireDown2.png"
 
 let L4obstacle3Img = new Image()
-L4obstacle3Img.src = "./images/fireDown.png"
+L4obstacle3Img.src = "./images/fireDown2.png"
 
 let L4obstacle4Img = new Image()
-L4obstacle4Img.src = "./images/fireUP.png"
+L4obstacle4Img.src = "./images/fireUp2.png"
 
 let L4obstacle4bImg = new Image()
-L4obstacle4bImg.src = "./images/fireUP.png"
+L4obstacle4bImg.src = "./images/fireUp2.png"
 
 let L4obstacle5Img = new Image()
-L4obstacle5Img.src = "./images/fireDown.png"
+L4obstacle5Img.src = "./images/fireDown2.png"
 
 let L4obstacle6Img = new Image()
-L4obstacle6Img.src = "./images/fireDown.png"
+L4obstacle6Img.src = "./images/fireDown2.png"
 
 let L4obstacle7Img = new Image()
-L4obstacle7Img.src = "./images/fireUP.png"
+L4obstacle7Img.src = "./images/fireUp2.png"
 
 let L4obstacle7bImg = new Image()
-L4obstacle7bImg.src = "./images/fireUP.png"
+L4obstacle7bImg.src = "./images/fireUp2.png"
 
 
 
