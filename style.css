@@ -19,6 +19,10 @@ body{
     width: 70px;
 }
 
+button img{
+    width: 15px
+}
+
 .container {
     display: flex;
     justify-content: center;

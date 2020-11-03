@@ -19,14 +19,61 @@ function sound(src) {
     this.sound.setAttribute("preload", "auto");
     this.sound.setAttribute("controls", "none");
     this.sound.style.display = "none";
+    this.sound.volume = 0.05;
+    this.sound.muted = false;
+
     document.body.appendChild(this.sound);
+
     this.play = function(){
       this.sound.play();
     }
     this.stop = function(){
       this.sound.pause();
     }
+    this.muted = function(){
+        this.sound.muted = true
+      }
+    this.unmuted = function(){
+        this.sound.muted = false
+      }
   }
+
+  function changeMusicIcon(){
+    if (backgroundSound.sound.muted){
+        document.getElementById("unmute").src="./images/mute.png";
+    } else if (!backgroundSound.sound.muted){
+        document.getElementById("unmute").src="./images/volumen.png";
+    }
+  }
+
+  document.getElementById('mute-button').onclick = () => {
+    if (backgroundSound.sound.muted){
+        backgroundSound.unmuted()
+    } else if (!backgroundSound.sound.muted){
+        backgroundSound.muted()
+    }
+    changeMusicIcon()
+  }
+
+  function changeEffectsIcon(){
+    if (gameOverSound.sound.muted){
+        document.getElementById("unmuteEffects").src="./images/mute.png";
+    } else if (!gameOverSound.sound.muted){
+        document.getElementById("unmuteEffects").src="./images/volumen.png";
+    }
+  }
+
+  document.getElementById('muteEffects-button').onclick = () => {
+    if (gameOverSound.sound.muted && levelUpSound.sound.muted){
+        gameOverSound.unmuted()
+        levelUpSound.unmuted()
+    } else if (!gameOverSound.sound.muted && !levelUpSound.sound.muted){
+        gameOverSound.muted()
+        levelUpSound.muted()
+    }
+    changeEffectsIcon()
+  }
+
 
 //------GAME AREA------//
 
@@ -100,52 +147,6 @@ let myBackgroundImg = new Image()
 myBackgroundImg.src = "./images/GameWallpaper.png"
 
 
-// myBackgroundImg.onload = ()=> {
-//     counter++;
-//     checkIfAllImagesAreLoaded();
-// }
-
-// playerImg.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();    
-// }
-
-// obstacle1Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// obstacle2Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// obstacle3Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// obstacle4Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// obstacle5Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// obstacle6Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// obstacle7Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-
-// const checkIfAllImagesAreLoaded = () => {
-// 	if (counter === 9) {
-// 		updateGameArea()
-// 	}
-// };
-
-
 //------ELEMENTS------//
 
 function component(image, x, y, width, height) {
@@ -169,13 +170,13 @@ function component(image, x, y, width, height) {
 
     this.crashWith = function (otherobj) {
         let myleft = this.x;
-        let myright = this.x + (this.width);
+        let myright = this.x + (this.width -5);
         let mytop = this.y;
-        let mybottom = this.y + (this.height);
+        let mybottom = this.y + (this.height -5);
         let otherleft = otherobj.x;
-        let otherright = otherobj.x + (otherobj.width);
+        let otherright = otherobj.x + (otherobj.width -5);
         let othertop = otherobj.y;
-        let otherbottom = otherobj.y + (otherobj.height);
+        let otherbottom = otherobj.y + (otherobj.height -5);
         let crash = true;
         if ((mybottom < othertop) ||
             (mytop > otherbottom) ||
@@ -223,6 +224,7 @@ function moveObstacles(obstacleNum) {
 function checkCrash() {
     if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle5) || player.crashWith(obstacle6) || player.crashWith(obstacle7)) {
         backgroundSound.stop();
+        gameOverSound.sound.currentTime = 0;
         gameOverSound.play();
         myGameArea.stop();
     } 
@@ -231,6 +233,7 @@ function checkCrash() {
 function checkGoal(){
     if (player.x >= 870){
         backgroundSound.stop();
+        levelUpSound.sound.currentTime = 0;
         levelUpSound.play()
         myGameArea.levelUp();
     }
@@ -272,7 +275,10 @@ function updateGameArea() {
     upDateComponents()
 }
 
-
+backgroundSound = new sound("./sounds/background-sound.mp3");
+winnerSound = new sound("./sounds/winner-sound.mp3");
+gameOverSound = new sound("./sounds/game-over-sound.mp3");
+levelUpSound = new sound("./sounds/level-up-sound.mp3");
 
 //------START GAME------//
 
@@ -281,11 +287,8 @@ function startGame() {
     gameOverText.style.visibility = "hidden"
     winScreenText.style.visibility = "hidden"
     clearInterval(myGameArea.interval);
-    backgroundSound = new sound("./sounds/background-sound.mp3");
-    gameOverSound = new sound("./sounds/game-over-sound.mp3");
-    levelUpSound = new sound("./sounds/level-up-sound.mp3");
-    winnerSound = new sound("./sounds/winner-sound.mp3");
-    backgroundSound.currentTime = 0; 
+    levelUpSound.currentTime = 0;
+    backgroundSound.currentTime = 0;
     backgroundSound.play()
     myGameArea.start();
     myBackground = new component(myBackgroundImg, 0, 0, 1000, 500);
@@ -299,14 +302,13 @@ function startGame() {
     obstacle7 = new component(obstacle7Img, 790, 0, 50, 60);
 }
 
-// checkIfAllImagesAreLoaded()
-
 
 window.onload = () => {
     document.getElementById('start-button').onclick = () => {
         startGame()
     };
   }
+
 
 
   //------------------------------LEVEL 2--------------------------------//
@@ -374,44 +376,6 @@ L2obstacle6Img.src = "./images/canonL2Down.png"
 let L2obstacle7Img = new Image()
 L2obstacle7Img.src = "./images/canonL2Up.png"
 
-
-// myBackgroundImg.onload = ()=> {
-//     counter++;
-//     checkIfAllImagesAreLoaded();
-// }
-// playerImg.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();    
-// }
-
-// L2obstacle1Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L2obstacle2Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L2obstacle3Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L2obstacle4Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L2obstacle5Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L2obstacle6Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L2obstacle7Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
 
 //------UPDATES - Level 2------//
 
@@ -562,43 +526,6 @@ L3obstacle6Img.src = "./images/plantDown.png"
 let L3obstacle7Img = new Image()
 L3obstacle7Img.src = "./images/plantUp.png"
 
-// myBackgroundImg.onload = ()=> {
-//     counter++;
-//     checkIfAllImagesAreLoaded();
-// }
-// playerImg.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();    
-// }
-
-// L3obstacle1Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L3obstacle2Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L3obstacle3Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L3obstacle4Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L3obstacle5Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L3obstacle6Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L3obstacle7Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
 
 //------UPDATES - Level 3------//
 
@@ -674,13 +601,13 @@ function startLevel3() {
     myGameArea3.start();
     myBackground = new component(myBackgroundImg, 0, 0, 1000, 500);
     player = new component(playerImg, 10, 400, 60, 60);
-    obstacle1 = new component(L3obstacle1Img, 160, 0, 70, 150);
-    obstacle2 = new component(L3obstacle2Img, 265, 0, 70, 150);
-    obstacle3 = new component(L3obstacle3Img, 370, 0, 70, 150);
-    obstacle4 = new component(L3obstacle4Img, 475, 0, 70, 150);
-    obstacle5 = new component(L3obstacle5Img, 580, 0, 70, 150);
-    obstacle6 = new component(L3obstacle6Img, 685, 0, 70, 150);
-    obstacle7 = new component(L3obstacle7Img, 790, 0, 70, 150);
+    obstacle1 = new component(L3obstacle1Img, 160, 0, 60, 150);
+    obstacle2 = new component(L3obstacle2Img, 265, 0, 60, 150);
+    obstacle3 = new component(L3obstacle3Img, 370, 0, 60, 150);
+    obstacle4 = new component(L3obstacle4Img, 475, 0, 60, 150);
+    obstacle5 = new component(L3obstacle5Img, 580, 0, 60, 150);
+    obstacle6 = new component(L3obstacle6Img, 685, 0, 60, 150);
+    obstacle7 = new component(L3obstacle7Img, 790, 0, 60, 150);
 }
 
 
@@ -722,94 +649,44 @@ let myGameAreaFinal = {
 }
 
 let finalBackGroundImg = new Image()
-finalBackGroundImg = "./images/bowserScene.jpg"
+finalBackGroundImg.src = "./images/fondoFinal.png"
 
 let L4obstacle1Img = new Image()
-L4obstacle1Img.src = "./images/fireUP.png"
+L4obstacle1Img.src = "./images/fireUp2.png"
 
 let L4obstacle2Img = new Image()
-L4obstacle2Img.src = "./images/fireDown.png"
+L4obstacle2Img.src = "./images/fireDown2.png"
 
 let L4obstacle2bImg = new Image()
-L4obstacle2bImg.src = "./images/fireDown.png"
+L4obstacle2bImg.src = "./images/fireDown2.png"
 
 let L4obstacle3Img = new Image()
-L4obstacle3Img.src = "./images/fireDown.png"
+L4obstacle3Img.src = "./images/fireDown2.png"
 
 let L4obstacle4Img = new Image()
-L4obstacle4Img.src = "./images/fireUP.png"
+L4obstacle4Img.src = "./images/fireUp2.png"
 
 let L4obstacle4bImg = new Image()
-L4obstacle4bImg.src = "./images/fireUP.png"
+L4obstacle4bImg.src = "./images/fireUp2.png"
 
 let L4obstacle5Img = new Image()
-L4obstacle5Img.src = "./images/fireDown.png"
+L4obstacle5Img.src = "./images/fireDown2.png"
 
 let L4obstacle6Img = new Image()
-L4obstacle6Img.src = "./images/fireDown.png"
+L4obstacle6Img.src = "./images/fireDown2.png"
 
 let L4obstacle7Img = new Image()
-L4obstacle7Img.src = "./images/fireUP.png"
+L4obstacle7Img.src = "./images/fireUp2.png"
 
 let L4obstacle7bImg = new Image()
-L4obstacle7bImg.src = "./images/fireUP.png"
+L4obstacle7bImg.src = "./images/fireUp2.png"
 
-
-
-// finalBackGroundImg.onload = ()=> {
-//     counter++;
-//     checkIfAllImagesAreLoaded();
-// }
-// playerImg.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();    
-// }
-
-// L4obstacle1Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L4obstacle2Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L4obstacle2bImg.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L4obstacle3Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L4obstacle4Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L4obstacle4bImg.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L4obstacle5Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L4obstacle6Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L4obstacle7Img.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
-// L4obstacle7bImg.onload = () => {
-//     counter++;
-//     checkIfAllImagesAreLoaded();   
-// }
 
 //------UPDATES - FINAL LEVEL------//
 
 function upDateComponentsFinal(){
-    myBackground.newPos(); myBackground.update()
+    myBackground.newPos();
+    myBackground.update();
     player.newPos()
     player.update()
     obstacle1.update();
