@@ -722,7 +722,7 @@ let myGameAreaFinal = {
 }
 
 let finalBackGroundImg = new Image()
-finalBackGroundImg = "./images/bowserScene.jpg"
+finalBackGroundImg.src = "./images/fondoFinal.png"
 
 let L4obstacle1Img = new Image()
 L4obstacle1Img.src = "./images/fireUP.png"
@@ -809,7 +809,8 @@ L4obstacle7bImg.src = "./images/fireUP.png"
 //------UPDATES - FINAL LEVEL------//
 
 function upDateComponentsFinal(){
-    myBackground.newPos(); myBackground.update()
+    myBackground.newPos();
+    myBackground.update();
     player.newPos()
     player.update()
     obstacle1.update();
