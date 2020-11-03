@@ -228,15 +228,15 @@ function startGame() {
     gameOverText.style.visibility = "hidden"
     winScreenText.style.visibility = "hidden"
     clearInterval(myGameArea.interval);
-    backgroundSound = new sound("/sounds/background-sound.mp3");
-    gameOverSound = new sound("/sounds/game-over-sound.mp3");
-    levelUpSound = new sound("/sounds/level-up-sound.mp3");
-    winnerSound = new sound("/sounds/winner-sound.mp3");
+    backgroundSound = new sound("./sounds/background-sound.mp3");
+    gameOverSound = new sound("./sounds/game-over-sound.mp3");
+    levelUpSound = new sound("./sounds/level-up-sound.mp3");
+    winnerSound = new sound("./sounds/winner-sound.mp3");
     backgroundSound.currentTime = 0; 
     backgroundSound.play()
     myGameArea.start();
-    myBackground = new component(1000, 500, "/images/GameWallpaper.png", 0, 0, "image");
-    player = new component(60, 60, "/images/marioFlyRight.png", 10, 400, "image");
+    myBackground = new component(1000, 500, "./images/GameWallpaper.png", 0, 0, "image");
+    player = new component(60, 60, "./images/marioFlyRight.png", 10, 400, "image");
     obstacle1 = new component(50, 60, "./images/canonL1Up.png", 160, 0, "image");
     obstacle2 = new component(50, 60, "./images/canonL1Down.png", 265, 0, "image");
     obstacle3 = new component(50, 60, "./images/canonL1Down.png", 370, 0, "image");
@@ -366,14 +366,14 @@ function updateGameArea2() {
 
 
 function startLevel2() {
-    backgroundSound = new sound("/sounds/background-sound.mp3");
-    gameOverSound = new sound("/sounds/game-over-sound.mp3");
-    levelUpSound = new sound("/sounds/level-up-sound.mp3");
+    backgroundSound = new sound("./sounds/background-sound.mp3");
+    gameOverSound = new sound("./sounds/game-over-sound.mp3");
+    levelUpSound = new sound("./sounds/level-up-sound.mp3");
     backgroundSound.currentTime = 0; 
     backgroundSound.play()
     myGameArea2.start();
-    myBackground = new component(1000, 500, "/images/GameWallpaper.png", 0, 0, "image");
-    player = new component(60, 60, "/images/marioFlyRight.png", 10, 400, "image");
+    myBackground = new component(1000, 500, "./images/GameWallpaper.png", 0, 0, "image");
+    player = new component(60, 60, "./images/marioFlyRight.png", 10, 400, "image");
     obstacle1 = new component(50, 60, "./images/canonL2Up.png", 160, 0, "image");
     obstacle2 = new component(50, 60, "./images/canonL2Down.png", 265, 0, "image");
     obstacle3 = new component(50, 60, "./images/canonL2Down.png", 370, 0, "image");
@@ -494,14 +494,14 @@ function updateGameArea3() {
 
 
 function startLevel3() {
-    backgroundSound = new sound("/sounds/background-sound.mp3");
-    gameOverSound = new sound("/sounds/game-over-sound.mp3");
-    levelUpSound = new sound("/sounds/level-up-sound.mp3");
+    backgroundSound = new sound("./sounds/background-sound.mp3");
+    gameOverSound = new sound("./sounds/game-over-sound.mp3");
+    levelUpSound = new sound("./sounds/level-up-sound.mp3");
     backgroundSound.currentTime = 0; 
     backgroundSound.play()
     myGameArea3.start();
-    myBackground = new component(1000, 500, "/images/GameWallpaper.png", 0, 0, "image");
-    player = new component(60, 60, "/images/marioFlyRight.png", 10, 400, "image");
+    myBackground = new component(1000, 500, "./images/GameWallpaper.png", 0, 0, "image");
+    player = new component(60, 60, "./images/marioFlyRight.png", 10, 400, "image");
     obstacle1 = new component(70, 150, "./images/plantUp.png", 160, 0, "image");
     obstacle2 = new component(70, 150, "./images/plantDown.png", 265, 0, "image");
     obstacle3 = new component(70, 150, "./images/plantDown.png", 370, 0, "image");
@@ -624,15 +624,15 @@ function updateGameAreaFinal() {
 
 
 function startLevelFinal() {
-    backgroundSound = new sound("/sounds/background-sound.mp3");
-    gameOverSound = new sound("/sounds/game-over-sound.mp3");
-    levelUpSound = new sound("/sounds/level-up-sound.mp3");
-    winnerSound = new sound("/sounds/winner-sound.mp3")
+    backgroundSound = new sound("./sounds/background-sound.mp3");
+    gameOverSound = new sound("./sounds/game-over-sound.mp3");
+    levelUpSound = new sound("./sounds/level-up-sound.mp3");
+    winnerSound = new sound("./sounds/winner-sound.mp3")
     backgroundSound.currentTime = 0; 
     backgroundSound.play()
     myGameAreaFinal.start();
-    myBackground = new component(1000, 500, "/images/bowserScene.jpg", 0, 0, "image");
-    player = new component(60, 60, "/images/marioFlyRight.png", 10, 400, "image");
+    myBackground = new component(1000, 500, "./images/bowserScene.jpg", 0, 0, "image");
+    player = new component(60, 60, "./images/marioFlyRight.png", 10, 400, "image");
     obstacle1 = new component(50, 60, "./images/fireUP.png", 160, 0, "image");
     obstacle2 = new component(50, 60, "./images/fireDown.png", 265, 0, "image");
     obstacle2b = new component(50, 60, "./images/fireDown.png", 265, 250, "image");
