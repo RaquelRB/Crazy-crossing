@@ -77,6 +77,9 @@ function sound(src) {
 let playerImg = new Image()
 playerImg.src = "./images/marioFlyRight.png"
 
+// let playerLeftImg = new Image()
+// playerLeftImg.src = "./images/marioFlyLeft.png"
+
 let obstacle1Img = new Image()
 obstacle1Img.src = "./images/canonL1Up.png"
 
@@ -197,12 +200,12 @@ function movePlayer() {
     player.speedY = 0
     if (myGameArea.key && myGameArea.key == 37 && player.x > 10) { //---LEFT
         player.speedX = -4; 
-        player.image.src = "/images/marioFlyLeft.png"
+        // playerLeft = new component(playerLeftImg, 10, 400, 60, 60);
     } 
 
     if (myGameArea.key && myGameArea.key == 39 && player.x < 930) { //---RIGHT
         player.speedX = 4; 
-        player.image.src = "/images/marioFlyRight.png"
+        // player.image.src = "/images/marioFlyRight.png"
     } 
 
     if (myGameArea.key && myGameArea.key == 38 && player.y > 10) {player.speedY = -4;} //---UP
