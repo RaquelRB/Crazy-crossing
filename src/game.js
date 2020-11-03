@@ -74,38 +74,93 @@ function sound(src) {
 
 //------MY VARIABLES------//
 
-let player;
-let obstacle1, obstacle2, obstacle3, obstacle4, obstacle5, obstacle6, obstacle7;
-let myBackground;
+let playerImg = new Image()
+playerImg.src = "./images/marioFlyRight.png"
+
+let obstacle1Img = new Image()
+obstacle1Img.src = "./images/canonL1Up.png"
+
+let obstacle2Img = new Image()
+obstacle2Img.src = "./images/canonL1Down.png"
+
+let obstacle3Img = new Image()
+obstacle3Img.src = "./images/canonL1Down.png"
+
+let obstacle4Img = new Image()
+obstacle4Img.src = "./images/canonL1Up.png"
+
+let obstacle5Img = new Image()
+obstacle5Img.src = "./images/canonL1Down.png"
+
+let obstacle6Img = new Image()
+obstacle6Img.src = "./images/canonL1Down.png"
+
+let obstacle7Img = new Image()
+obstacle7Img.src = "./images/canonL1Up.png"
+
+let myBackgroundImg = new Image()
+myBackgroundImg.src = "./images/GameWallpaper.png"
+
+myBackgroundImg.onload = ()=> {
+    counter++;
+    checkIfAllImagesAreLoaded();
+}
+
+playerImg.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();    
+}
+
+obstacle1Img.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+obstacle2Img.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+obstacle3Img.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+obstacle4Img.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+obstacle5Img.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+obstacle6Img.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+obstacle7Img.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+
+const checkIfAllImagesAreLoaded = () => {
+	if (counter === 9) {
+		updateGameArea()
+	}
+};
 
 
 //------ELEMENTS------//
 
-function component(width, height, color, x, y, type) {
-    this.type = type;
-    if (type == "image") {
-        this.image = new Image();
-        this.image.src = color;
-    }
+function component(image, x, y, width, height) {
+    this.image = image
+    this.x = x;
+    this.y = y;
     this.width = width;
     this.height = height;
     this.speedX = 0;
     this.speedY = 0;
-    this.x = x;
-    this.y = y;
 
     this.update = function () {
         ctx = myGameArea.context;
-        if (this.type == "text") {
-            ctx.font = this.width + " " + this.height;
-            ctx.fillStyle = color;
-            ctx.fillText(this.text, this.x, this.y);
-        } else if (type == "image") {
-            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-        } else {
-            ctx.fillStyle = color;
-            ctx.fillRect(this.x, this.y, this.width, this.height);
-        }
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 
     this.newPos = function () {
@@ -235,15 +290,15 @@ function startGame() {
     backgroundSound.currentTime = 0; 
     backgroundSound.play()
     myGameArea.start();
-    myBackground = new component(1000, 500, "./images/GameWallpaper.png", 0, 0, "image");
-    player = new component(60, 60, "./images/marioFlyRight.png", 10, 400, "image");
-    obstacle1 = new component(50, 60, "./images/canonL1Up.png", 160, 0, "image");
-    obstacle2 = new component(50, 60, "./images/canonL1Down.png", 265, 0, "image");
-    obstacle3 = new component(50, 60, "./images/canonL1Down.png", 370, 0, "image");
-    obstacle4 = new component(50, 60, "./images/canonL1Up.png", 475, 0, "image");
-    obstacle5 = new component(50, 60, "./images/canonL1Down.png", 580, 0, "image");
-    obstacle6 = new component(50, 60, "./images/canonL1Down.png", 685, 0, "image");
-    obstacle7 = new component(50, 60, "./images/canonL1Up.png", 790, 0, "image");
+    myBackground = new component(myBackgroundImg, 0, 0, 1000, 500);
+    player = new component(playerImg, 10, 400, 60, 60);
+    obstacle1 = new component(obstacle1Img, 160, 0, 50, 60);
+    obstacle2 = new component(obstacle2Img, 265, 0, 50, 60);
+    obstacle3 = new component(obstacle3Img, 370, 0, 50, 60);
+    obstacle4 = new component(obstacle4Img, 475, 0, 50, 60);
+    obstacle5 = new component(obstacle5Img, 580, 0, 50, 60);
+    obstacle6 = new component(obstacle6Img, 685, 0, 50, 60);
+    obstacle7 = new component(obstacle7Img, 790, 0, 50, 60);
 }
 
 

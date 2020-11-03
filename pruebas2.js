@@ -7,6 +7,7 @@ levelUpText.style.visibility = "hidden"
 let winScreenText = document.getElementById("win-screen")
 winScreenText.style.visibility = "hidden"
 
+
 //----SOUNDS----//
 
 
@@ -74,38 +75,24 @@ function sound(src) {
 
 //------MY VARIABLES------//
 
-let player;
-let obstacle1, obstacle2, obstacle3, obstacle4, obstacle5, obstacle6, obstacle7;
-let myBackground;
+
 
 
 //------ELEMENTS------//
 
-function component(width, height, color, x, y, type) {
-    this.type = type;
-    if (type == "image") {
-        this.image = new Image();
-        this.image.src = color;
-    }
+function component(image, width, height, x, y) {
     this.width = width;
-    this.height = height;
-    this.speedX = 0;
-    this.speedY = 0;
+    this.height = height;   
     this.x = x;
     this.y = y;
+    this.image = image;
+    this.speedX = 0;
+    this.speedY = 0;
+
 
     this.update = function () {
         ctx = myGameArea.context;
-        if (this.type == "text") {
-            ctx.font = this.width + " " + this.height;
-            ctx.fillStyle = color;
-            ctx.fillText(this.text, this.x, this.y);
-        } else if (type == "image") {
-            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-        } else {
-            ctx.fillStyle = color;
-            ctx.fillRect(this.x, this.y, this.width, this.height);
-        }
+        image = ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 
     this.newPos = function () {
@@ -134,6 +121,87 @@ function component(width, height, color, x, y, type) {
 
 }
 
+let player = new Image()
+player.src = "./images/marioFlyRight.png"
+
+let obstacle1 = new Image()
+obstacle1.src = "./images/canonL2Up.png"
+
+let obstacle2 = new Image()
+obstacle2.src = "./images/canonL2Down.png"
+
+let obstacle3 = new Image()
+obstacle3.src = "./images/canonL2Down.png"
+
+let obstacle4 = new Image()
+obstacle4.src = "./images/canonL2Up.png"
+
+let obstacle5 = new Image()
+obstacle5.src = "./images/canonL2Down.png"
+
+let obstacle6 = new Image()
+obstacle6.src = "./images/canonL2Down.png"
+
+let obstacle7 = new Image()
+obstacle7.src = "./images/canonL2Up.png"
+
+let myBackground = new Image()
+myBackground.src = "./images/GameWallpaper.png"
+
+myBackground.onload = ()=> {
+    counter++;
+    checkIfAllImagesAreLoaded();
+}
+
+player.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();    
+}
+
+obstacle1.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+obstacle2.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+obstacle3.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+obstacle4.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+obstacle5.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+obstacle6.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+obstacle7.onload = () => {
+    counter++;
+    checkIfAllImagesAreLoaded();   
+}
+
+const checkIfAllImagesAreLoaded = () => {
+	if (counter === 9) {
+		updateCanvas();
+	}
+};
+
+myBackground = new component(player.src, 1000, 500, 0, 0);
+player = new component(60, 60, "./images/marioFlyRight.png", 10, 400, "image");
+obstacle1 = new component(50, 60, "./images/canonL2Up.png", 160, 0, "image");
+obstacle2 = new component(50, 60, "./images/canonL2Down.png", 265, 0, "image");
+obstacle3 = new component(50, 60, "./images/canonL2Down.png", 370, 0, "image");
+obstacle4 = new component(50, 60, "./images/canonL2Up.png", 475, 0, "image");
+obstacle5 = new component(50, 60, "./images/canonL2Down.png", 580, 0, "image");
+obstacle6 = new component(50, 60, "./images/canonL2Down.png", 685, 0, "image");
+obstacle7 = new component(50, 60, "./images/canonL2Up.png", 790, 0, "image");
 
 //------FUNCTIONS------//
 
@@ -372,15 +440,7 @@ function startLevel2() {
     backgroundSound.currentTime = 0; 
     backgroundSound.play()
     myGameArea2.start();
-    myBackground = new component(1000, 500, "./images/GameWallpaper.png", 0, 0, "image");
-    player = new component(60, 60, "./images/marioFlyRight.png", 10, 400, "image");
-    obstacle1 = new component(50, 60, "./images/canonL2Up.png", 160, 0, "image");
-    obstacle2 = new component(50, 60, "./images/canonL2Down.png", 265, 0, "image");
-    obstacle3 = new component(50, 60, "./images/canonL2Down.png", 370, 0, "image");
-    obstacle4 = new component(50, 60, "./images/canonL2Up.png", 475, 0, "image");
-    obstacle5 = new component(50, 60, "./images/canonL2Down.png", 580, 0, "image");
-    obstacle6 = new component(50, 60, "./images/canonL2Down.png", 685, 0, "image");
-    obstacle7 = new component(50, 60, "./images/canonL2Up.png", 790, 0, "image");
+
 }
 
   //------------------------------LEVEL 3--------------------------------//
