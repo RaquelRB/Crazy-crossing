@@ -7,7 +7,9 @@ levelUpText.style.visibility = "hidden"
 let winScreenText = document.getElementById("win-screen")
 winScreenText.style.visibility = "hidden"
 
-//----SOUNDS----//
+
+//-------------------------------SOUNDS-------------------------------//
+
 let backgroundSound;
 let gameOverSound;
 let levelUpSound;
@@ -21,9 +23,8 @@ function sound(src) {
     this.sound.style.display = "none";
     this.sound.volume = 0.05;
     this.sound.muted = false;
-
+    this.sound.loop = false;
     document.body.appendChild(this.sound);
-
     this.play = function(){
       this.sound.play();
     }
@@ -38,11 +39,26 @@ function sound(src) {
       }
   }
 
+backgroundSound = new sound("./sounds/background-sound.mp3");
+winnerSound = new sound("./sounds/winner-sound.mp3");
+gameOverSound = new sound("./sounds/game-over-sound.mp3");
+levelUpSound = new sound("./sounds/level-up-sound.mp3");
+
+backgroundSound.sound.loop = true
+
   function changeMusicIcon(){
     if (backgroundSound.sound.muted){
-        document.getElementById("unmute").src="./images/mute.png";
+        document.getElementById("unmute").src= "./images/mute.png"
     } else if (!backgroundSound.sound.muted){
-        document.getElementById("unmute").src="./images/volumen.png";
+        document.getElementById("unmute").src= "./images/volumen.png"
+    }
+  }
+
+  function changeEffectsIcon(){
+    if (gameOverSound.sound.muted){
+        document.getElementById("unmuteEffects").src="./images/mute.png";
+    } else if (!gameOverSound.sound.muted){
+        document.getElementById("unmuteEffects").src="./images/volumen.png";
     }
   }
 
@@ -53,14 +69,6 @@ function sound(src) {
         backgroundSound.muted()
     }
     changeMusicIcon()
-  }
-
-  function changeEffectsIcon(){
-    if (gameOverSound.sound.muted){
-        document.getElementById("unmuteEffects").src="./images/mute.png";
-    } else if (!gameOverSound.sound.muted){
-        document.getElementById("unmuteEffects").src="./images/volumen.png";
-    }
   }
 
   document.getElementById('muteEffects-button').onclick = () => {
@@ -75,7 +83,9 @@ function sound(src) {
   }
 
 
-//------GAME AREA------//
+//-------------------------------LEVEL 1-------------------------------//
+
+//------L1 GAME AREA------//
 
 let myGameArea = {
     canvas: document.getElementById("canvas"),
@@ -85,6 +95,7 @@ let myGameArea = {
         this.context = this.canvas.getContext("2d");
         this.frameNo = 0;
         this.interval = setInterval(updateGameArea, 20);
+
         window.addEventListener('keydown', function (e) {
             myGameArea.key = e.keyCode;
         })
@@ -117,10 +128,16 @@ let myGameArea = {
 }
 
 
-//------MY VARIABLES------//
+//------L1 MY VARIABLES: Player, Obstacles & Background------//
 
 let playerImg = new Image()
 playerImg.src = "./images/marioFlyRight.png"
+
+let playerLeftImg = new Image()
+playerLeftImg.src = "./images/marioFlyLeft.png"
+
+let playerDeadImg = new Image()
+playerDeadImg.src = "./images/mariodead.png"
 
 let obstacle1Img = new Image()
 obstacle1Img.src = "./images/canonL1Up.png"
@@ -147,7 +164,7 @@ let myBackgroundImg = new Image()
 myBackgroundImg.src = "./images/GameWallpaper.png"
 
 
-//------ELEMENTS------//
+//------L1 COMPONENT CREATION------//
 
 function component(image, x, y, width, height) {
     this.image = image
@@ -189,24 +206,24 @@ function component(image, x, y, width, height) {
 }
 
 
-//------FUNCTIONS------//
+//------L1 FUNCTIONS------//
 
 function movePlayer() {
     player.speedX = 0
     player.speedY = 0
-    if (myGameArea.key && myGameArea.key == 37 && player.x > 10) { //---LEFT
-        player.speedX = -4; 
-        // playerLeft = new component(playerLeftImg, 10, 400, 60, 60);
-    } 
+    if (myGameArea.key && myGameArea.key == 37 && player.x > 10) { //---Left movement
+        player.speedX = -4;
+        player.image = playerLeftImg} 
 
-    if (myGameArea.key && myGameArea.key == 39 && player.x < 930) { //---RIGHT
+    if (myGameArea.key && myGameArea.key == 39 && player.x < 930) { //---Right movement
         player.speedX = 4; 
-        // player.image.src = "/images/marioFlyRight.png"
-    } 
+        player.image = playerImg} 
 
-    if (myGameArea.key && myGameArea.key == 38 && player.y > 10) {player.speedY = -4;} //---UP
+    if (myGameArea.key && myGameArea.key == 38 && player.y > 10){ //---Up movement
+        player.speedY = -4;}
 
-    if (myGameArea.key && myGameArea.key == 40 && player.y < 430) {player.speedY = 4; } //---DOWN
+    if (myGameArea.key && myGameArea.key == 40 && player.y < 430){
+        player.speedY = 4;} //---Down movement
 }
 
 function moveObstacles(obstacleNum) {
@@ -243,8 +260,8 @@ function checkGoal(){
 //------UPDATES------//
 
 function upDateComponents(){
-    myBackground.newPos(); myBackground.update()
-    player.newPos(); player.update()
+    myBackground.update()
+    player.update()
     obstacle1.update();
     obstacle2.update();
     obstacle3.update();
@@ -255,6 +272,7 @@ function upDateComponents(){
 }
 
 function upDatePositions (){
+    player.newPos(); 
     movePlayer(); 
     moveObstacles('1')
     moveObstacles('2')
@@ -275,10 +293,6 @@ function updateGameArea() {
     upDateComponents()
 }
 
-backgroundSound = new sound("./sounds/background-sound.mp3");
-winnerSound = new sound("./sounds/winner-sound.mp3");
-gameOverSound = new sound("./sounds/game-over-sound.mp3");
-levelUpSound = new sound("./sounds/level-up-sound.mp3");
 
 //------START GAME------//
 
@@ -306,6 +320,7 @@ function startGame() {
 window.onload = () => {
     document.getElementById('start-button').onclick = () => {
         startGame()
+    document.getElementById('start-button').disabled=true; 
     };
   }
 
