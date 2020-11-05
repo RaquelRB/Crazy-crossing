@@ -10,77 +10,71 @@ winScreenText.style.visibility = "hidden"
 
 //-------------------------------SOUNDS-------------------------------//
 
-let backgroundSound;
-let gameOverSound;
-let levelUpSound;
-let winnerSound;
-
 function sound(src) {
     this.sound = document.createElement("audio");
     this.sound.src = src;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
     this.sound.volume = 0.05;
     this.sound.muted = false;
     this.sound.loop = false;
-    document.body.appendChild(this.sound);
-    this.play = function(){
-      this.sound.play();
-    }
-    this.stop = function(){
-      this.sound.pause();
-    }
-    this.muted = function(){
-        this.sound.muted = true
-      }
-    this.unmuted = function(){
-        this.sound.muted = false
-      }
-  }
 
-backgroundSound = new sound("./sounds/background-sound.mp3");
-winnerSound = new sound("./sounds/winner-sound.mp3");
-gameOverSound = new sound("./sounds/game-over-sound.mp3");
-levelUpSound = new sound("./sounds/level-up-sound.mp3");
+    this.play = function () {
+        this.sound.play();
+    }
+    this.stop = function () {
+        this.sound.pause();
+    }
+    this.muted = function () {
+        this.sound.muted = true
+    }
+    this.unmuted = function () {
+        this.sound.muted = false
+    }
+}
+
+let backgroundSound = new sound("./sounds/background-sound.mp3");
+let winnerSound = new sound("./sounds/winner-sound.mp3");
+let gameOverSound = new sound("./sounds/game-over-sound.mp3");
+let levelUpSound = new sound("./sounds/level-up-sound.mp3");
+let finalLevelSound = new sound("./sounds/final-level-sound.mp3")
 
 backgroundSound.sound.loop = true
+finalLevelSound.sound.loop = true
 
-  function changeMusicIcon(){
-    if (backgroundSound.sound.muted){
-        document.getElementById("unmute").src= "./images/mute.png"
-    } else if (!backgroundSound.sound.muted){
-        document.getElementById("unmute").src= "./images/volumen.png"
+function changeMusicIcon() {
+    if (backgroundSound.sound.muted) {
+        document.getElementById("unmute").src = "./images/mute.png"
+    } else if (!backgroundSound.sound.muted) {
+        document.getElementById("unmute").src = "./images/unmute.png"
     }
-  }
+}
 
-  function changeEffectsIcon(){
-    if (gameOverSound.sound.muted){
-        document.getElementById("unmuteEffects").src="./images/mute.png";
-    } else if (!gameOverSound.sound.muted){
-        document.getElementById("unmuteEffects").src="./images/volumen.png";
+function changeEffectsIcon() {
+    if (gameOverSound.sound.muted) {
+        document.getElementById("unmuteEffects").src = "./images/mute.png";
+    } else if (!gameOverSound.sound.muted) {
+        document.getElementById("unmuteEffects").src = "./images/unmute.png";
     }
-  }
+}
 
-  document.getElementById('mute-button').onclick = () => {
-    if (backgroundSound.sound.muted){
+document.getElementById('mute-button').onclick = () => {
+    if (backgroundSound.sound.muted) {
         backgroundSound.unmuted()
-    } else if (!backgroundSound.sound.muted){
+    } else if (!backgroundSound.sound.muted) {
         backgroundSound.muted()
     }
     changeMusicIcon()
-  }
+}
 
-  document.getElementById('muteEffects-button').onclick = () => {
-    if (gameOverSound.sound.muted && levelUpSound.sound.muted){
+document.getElementById('muteEffects-button').onclick = () => {
+    if (gameOverSound.sound.muted && levelUpSound.sound.muted) {
         gameOverSound.unmuted()
         levelUpSound.unmuted()
-    } else if (!gameOverSound.sound.muted && !levelUpSound.sound.muted){
+    } else if (!gameOverSound.sound.muted && !levelUpSound.sound.muted) {
         gameOverSound.muted()
         levelUpSound.muted()
     }
     changeEffectsIcon()
-  }
+}
 
 //--------------MY VARIABLES: Player, Obstacles & Background--------------//
 
@@ -91,6 +85,9 @@ let playerLeftImg = new Image()
 playerLeftImg.src = "./images/marioFlyLeft.png"
 
 //------Level 1------//
+
+let myBackgroundImg = new Image()
+myBackgroundImg.src = "./images/GameTheme.png"
 
 let obstacle1Img = new Image()
 obstacle1Img.src = "./images/canonL1Up.png"
@@ -113,89 +110,86 @@ obstacle6Img.src = "./images/canonL1Down.png"
 let obstacle7Img = new Image()
 obstacle7Img.src = "./images/canonL1Up.png"
 
-let myBackgroundImg = new Image()
-myBackgroundImg.src = "./images/GameWallpaper.png"
-
 //------Level 2------//
 
-let L2obstacle1Img = new Image()
-L2obstacle1Img.src = "./images/canonL2Up.png"
+let l2obstacle1Img = new Image()
+l2obstacle1Img.src = "./images/canonL2Up.png"
 
-let L2obstacle2Img = new Image()
-L2obstacle2Img.src = "./images/canonL2Down.png"
+let l2obstacle2Img = new Image()
+l2obstacle2Img.src = "./images/canonL2Down.png"
 
-let L2obstacle3Img = new Image()
-L2obstacle3Img.src = "./images/canonL2Down.png"
+let l2obstacle3Img = new Image()
+l2obstacle3Img.src = "./images/canonL2Down.png"
 
-let L2obstacle4Img = new Image()
-L2obstacle4Img.src = "./images/canonL2Up.png"
+let l2obstacle4Img = new Image()
+l2obstacle4Img.src = "./images/canonL2Up.png"
 
-let L2obstacle5Img = new Image()
-L2obstacle5Img.src = "./images/canonL2Down.png"
+let l2obstacle5Img = new Image()
+l2obstacle5Img.src = "./images/canonL2Down.png"
 
-let L2obstacle6Img = new Image()
-L2obstacle6Img.src = "./images/canonL2Down.png"
+let l2obstacle6Img = new Image()
+l2obstacle6Img.src = "./images/canonL2Down.png"
 
-let L2obstacle7Img = new Image()
-L2obstacle7Img.src = "./images/canonL2Up.png"
+let l2obstacle7Img = new Image()
+l2obstacle7Img.src = "./images/canonL2Up.png"
 
 //------Level 3------//
 
-let L3obstacle1Img = new Image()
-L3obstacle1Img.src = "./images/plantUp.png"
+let l3obstacle1Img = new Image()
+l3obstacle1Img.src = "./images/plantUp.png"
 
-let L3obstacle2Img = new Image()
-L3obstacle2Img.src = "./images/plantDown.png"
+let l3obstacle2Img = new Image()
+l3obstacle2Img.src = "./images/plantDown.png"
 
-let L3obstacle3Img = new Image()
-L3obstacle3Img.src = "./images/plantDown.png"
+let l3obstacle3Img = new Image()
+l3obstacle3Img.src = "./images/plantDown.png"
 
-let L3obstacle4Img = new Image()
-L3obstacle4Img.src = "./images/plantUp.png"
+let l3obstacle4Img = new Image()
+l3obstacle4Img.src = "./images/plantUp.png"
 
-let L3obstacle5Img = new Image()
-L3obstacle5Img.src = "./images/plantDown.png"
+let l3obstacle5Img = new Image()
+l3obstacle5Img.src = "./images/plantDown.png"
 
-let L3obstacle6Img = new Image()
-L3obstacle6Img.src = "./images/plantDown.png"
+let l3obstacle6Img = new Image()
+l3obstacle6Img.src = "./images/plantDown.png"
 
-let L3obstacle7Img = new Image()
-L3obstacle7Img.src = "./images/plantUp.png"
-
-let finalBackGroundImg = new Image()
-finalBackGroundImg.src = "./images/fondoFinal.png"
+let l3obstacle7Img = new Image()
+l3obstacle7Img.src = "./images/plantUp.png"
 
 //------Level 4------//
 
-let L4obstacle1Img = new Image()
-L4obstacle1Img.src = "./images/fireUp2.png"
+let finalBackGroundImg = new Image()
+finalBackGroundImg.src = "./images/finalTheme.png"
 
-let L4obstacle2Img = new Image()
-L4obstacle2Img.src = "./images/fireDown2.png"
+let l4obstacle1Img = new Image()
+l4obstacle1Img.src = "./images/fireUp2.png"
 
-let L4obstacle2bImg = new Image()
-L4obstacle2bImg.src = "./images/fireDown2.png"
+let l4obstacle2Img = new Image()
+l4obstacle2Img.src = "./images/fireDown2.png"
 
-let L4obstacle3Img = new Image()
-L4obstacle3Img.src = "./images/fireDown2.png"
+let l4obstacle2bImg = new Image()
+l4obstacle2bImg.src = "./images/fireDown2.png"
 
-let L4obstacle4Img = new Image()
-L4obstacle4Img.src = "./images/fireUp2.png"
+let l4obstacle3Img = new Image()
+l4obstacle3Img.src = "./images/fireDown2.png"
 
-let L4obstacle4bImg = new Image()
-L4obstacle4bImg.src = "./images/fireUp2.png"
+let l4obstacle4Img = new Image()
+l4obstacle4Img.src = "./images/fireUp2.png"
 
-let L4obstacle5Img = new Image()
-L4obstacle5Img.src = "./images/fireDown2.png"
+let l4obstacle4bImg = new Image()
+l4obstacle4bImg.src = "./images/fireUp2.png"
 
-let L4obstacle6Img = new Image()
-L4obstacle6Img.src = "./images/fireDown2.png"
+let l4obstacle5Img = new Image()
+l4obstacle5Img.src = "./images/fireDown2.png"
 
-let L4obstacle7Img = new Image()
-L4obstacle7Img.src = "./images/fireUp2.png"
+let l4obstacle6Img = new Image()
+l4obstacle6Img.src = "./images/fireDown2.png"
 
-let L4obstacle7bImg = new Image()
-L4obstacle7bImg.src = "./images/fireUp2.png"
+let l4obstacle7Img = new Image()
+l4obstacle7Img.src = "./images/fireUp2.png"
+
+let l4obstacle7bImg = new Image()
+l4obstacle7bImg.src = "./images/fireUp2.png"
 
 
 //-------------------------------COMPONENTS CREATION-------------------------------//
@@ -221,13 +215,13 @@ function component(image, x, y, width, height) {
 
     this.crashWith = function (otherobj) {
         let myleft = this.x;
-        let myright = this.x + (this.width -5);
+        let myright = this.x + (this.width - 5);
         let mytop = this.y;
-        let mybottom = this.y + (this.height -5);
+        let mybottom = this.y + (this.height - 5);
         let otherleft = otherobj.x;
-        let otherright = otherobj.x + (otherobj.width -5);
+        let otherright = otherobj.x + (otherobj.width - 5);
         let othertop = otherobj.y;
-        let otherbottom = otherobj.y + (otherobj.height -5);
+        let otherbottom = otherobj.y + (otherobj.height - 5);
         let crash = true;
         if ((mybottom < othertop) ||
             (mytop > otherbottom) ||
@@ -244,8 +238,6 @@ function component(image, x, y, width, height) {
 let myGameArea = {
     canvas: document.getElementById("canvas"),
     start: function () {
-        this.canvas.width = 1000;
-        this.canvas.height = 500;
         this.context = this.canvas.getContext("2d");
         this.frameNo = 0;
         this.interval = setInterval(updateGameArea, 20);
@@ -258,7 +250,7 @@ let myGameArea = {
         })
     },
     clear: function () {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, 1000, 500);
     },
     stop: function () {
         clearInterval(this.interval);
@@ -268,37 +260,43 @@ let myGameArea = {
             gameOverSound.stop();
             startGame();
             gameOverText.style.visibility = "hidden"
-          };
+        };
     },
-    levelUp: function (){
+    levelUp: function () {
         clearInterval(this.interval);
         levelUpText.style.visibility = "visible"
         this.clear()
         document.getElementById('continue').onclick = () => {
             startLevel2();
             levelUpText.style.visibility = "hidden"
-          };
+        };
     }
 }
 
 //------L1 FUNCTIONS------//
 
 function movePlayer() {
+
     player.speedX = 0
     player.speedY = 0
+
     if (myGameArea.key && myGameArea.key == 37 && player.x > 10) { //---Left movement
         player.speedX = -4;
-        player.image = playerLeftImg} 
+        player.image = playerLeftImg
+    }
 
     if (myGameArea.key && myGameArea.key == 39 && player.x < 930) { //---Right movement
-        player.speedX = 4; 
-        player.image = playerImg} 
+        player.speedX = 4;
+        player.image = playerImg
+    }
 
-    if (myGameArea.key && myGameArea.key == 38 && player.y > 10){ //---Up movement
-        player.speedY = -4;}
+    if (myGameArea.key && myGameArea.key == 38 && player.y > 10) { //---Up movement
+        player.speedY = -4;
+    }
 
-    if (myGameArea.key && myGameArea.key == 40 && player.y < 430){ //---Down movement
-        player.speedY = 4;} 
+    if (myGameArea.key && myGameArea.key == 40 && player.y < 430) { //---Down movement
+        player.speedY = 4;
+    }
 }
 
 function moveObstacles(obstacleNum) {
@@ -319,11 +317,11 @@ function checkCrash(myGameArealevel) {
         gameOverSound.sound.currentTime = 0;
         gameOverSound.play();
         myGameArealevel.stop();
-    } 
+    }
 }
 
-function checkGoal(myGameArealevel){
-    if (player.x >= 870){
+function checkGoal(myGameArealevel) {
+    if (player.x >= 870) {
         backgroundSound.stop();
         levelUpSound.sound.currentTime = 0;
         levelUpSound.play()
@@ -333,7 +331,7 @@ function checkGoal(myGameArealevel){
 
 //------L1 UPDATES------//
 
-function upDateComponents(){
+function updateComponents() {
     myBackground.update()
     player.update()
     obstacle1.update();
@@ -345,21 +343,21 @@ function upDateComponents(){
     obstacle7.update();
 }
 
-function upDatePositions (){
-    player.newPos(); 
-    movePlayer(); 
-    for (let i=0; i<=7; i++){
+function updatePositions() {
+    player.newPos();
+    movePlayer();
+    for (let i = 0; i <= 7; i++) {
         moveObstacles(`${i}`)
-    } 
+    }
 }
 
 function updateGameArea() {
     checkCrash(myGameArea)
     checkGoal(myGameArea)
     myGameArea.clear();
-    myGameArea.frameNo += 1; 
-    upDatePositions()
-    upDateComponents()
+    myGameArea.frameNo += 1;
+    updatePositions()
+    updateComponents()
 }
 
 
@@ -388,18 +386,16 @@ function startGame() {
 window.onload = () => {
     document.getElementById('start-button').onclick = () => {
         startGame()
-    document.getElementById('start-button').disabled=true; 
+        document.getElementById('start-button').disabled = true;
     };
-  }
+}
 
 
 //-------------------------------LEVEL 2-------------------------------//
 
-  let myGameArea2 = {
+let myGameArea2 = {
     canvas: document.getElementById("canvas"),
     start: function () {
-        this.canvas.width = 1000;
-        this.canvas.height = 500;
         this.context = this.canvas.getContext("2d");
         this.frameNo = 0;
         this.interval = setInterval(updateGameArea2, 20);
@@ -411,7 +407,7 @@ window.onload = () => {
         })
     },
     clear: function () {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, 1000, 500);
     },
     stop: function () {
         clearInterval(this.interval);
@@ -421,15 +417,15 @@ window.onload = () => {
             gameOverSound.stop();
             startLevel2();
             gameOverText.style.visibility = "hidden"
-          };
+        };
     },
-    levelUp: function (){
+    levelUp: function () {
         clearInterval(this.interval);
         levelUpText.style.visibility = "visible"
         document.getElementById('continue').onclick = () => {
             startLevel3();
             levelUpText.style.visibility = "hidden"
-          };
+        };
     }
 }
 
@@ -447,47 +443,45 @@ function moveObstacles2(obstacleNum) {
     }
 }
 
-function upDatePositions2 (){
+function updatePositions2() {
     player.newPos();
     movePlayer();
-    for (let i=0; i<=7; i++){
-    moveObstacles2(`${i}`)
-} 
+    for (let i = 0; i <= 7; i++) {
+        moveObstacles2(`${i}`)
+    }
 }
 
 function updateGameArea2() {
     checkCrash(myGameArea2)
     checkGoal(myGameArea2)
     myGameArea2.clear();
-    myGameArea2.frameNo += 1; 
-    upDatePositions2()
-    upDateComponents()
+    myGameArea2.frameNo += 1;
+    updatePositions2()
+    updateComponents()
 }
 
 //------L2 START------//
 
 function startLevel2() {
-    backgroundSound.currentTime = 0; 
+    backgroundSound.currentTime = 0;
     backgroundSound.play()
     myGameArea2.start();
     myBackground = new component(myBackgroundImg, 0, 0, 1000, 500);
     player = new component(playerImg, 10, 400, 60, 60);
-    obstacle1 = new component(L2obstacle1Img, 160, 0, 50, 60);
-    obstacle2 = new component(L2obstacle2Img, 265, 0, 50, 60);
-    obstacle3 = new component(L2obstacle3Img, 370, 0, 50, 60);
-    obstacle4 = new component(L2obstacle4Img, 475, 0, 50, 60);
-    obstacle5 = new component(L2obstacle5Img, 580, 0, 50, 60);
-    obstacle6 = new component(L2obstacle6Img, 685, 0, 50, 60);
-    obstacle7 = new component(L2obstacle7Img, 790, 0, 50, 60);
+    obstacle1 = new component(l2obstacle1Img, 160, 0, 50, 60);
+    obstacle2 = new component(l2obstacle2Img, 265, 0, 50, 60);
+    obstacle3 = new component(l2obstacle3Img, 370, 0, 50, 60);
+    obstacle4 = new component(l2obstacle4Img, 475, 0, 50, 60);
+    obstacle5 = new component(l2obstacle5Img, 580, 0, 50, 60);
+    obstacle6 = new component(l2obstacle6Img, 685, 0, 50, 60);
+    obstacle7 = new component(l2obstacle7Img, 790, 0, 50, 60);
 }
 
 //-------------------------------LEVEL 3-------------------------------//
 
-  let myGameArea3 = {
+let myGameArea3 = {
     canvas: document.getElementById("canvas"),
     start: function () {
-        this.canvas.width = 1000;
-        this.canvas.height = 500;
         this.context = this.canvas.getContext("2d");
         this.frameNo = 0;
         this.interval = setInterval(updateGameArea3, 20);
@@ -499,7 +493,7 @@ function startLevel2() {
         })
     },
     clear: function () {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, 1000, 500);
     },
     stop: function () {
         clearInterval(this.interval);
@@ -509,17 +503,16 @@ function startLevel2() {
             gameOverSound.stop();
             startLevel3();
             gameOverText.style.visibility = "hidden"
-          };
+        };
     },
-    levelUp: function (){
+    levelUp: function () {
         clearInterval(this.interval);
         levelUpText.style.visibility = "visible"
         this.clear()
         document.getElementById('continue').onclick = () => {
-            // levelUpSound.stop();
-            startLevelFinal();
+            startFinalLevel();
             levelUpText.style.visibility = "hidden"
-          };
+        };
     }
 }
 
@@ -537,38 +530,38 @@ function moveObstacles3(obstacleNum) {
     }
 }
 
-function upDatePositions3 (){
+function updatePositions3() {
     player.newPos()
     movePlayer();
-    for (let i=0; i<=7; i++){
+    for (let i = 0; i <= 7; i++) {
         moveObstacles3(`${i}`)
-    }  
+    }
 }
 
 function updateGameArea3() {
     checkCrash(myGameArea3)
     checkGoal(myGameArea3)
     myGameArea3.clear();
-    myGameArea3.frameNo += 1; 
-    upDatePositions3()
-    upDateComponents()
+    myGameArea3.frameNo += 1;
+    updatePositions3()
+    updateComponents()
 }
 
 //------L3 START------//
 
 function startLevel3() {
-    backgroundSound.currentTime = 0; 
+    backgroundSound.currentTime = 0;
     backgroundSound.play()
     myGameArea3.start();
     myBackground = new component(myBackgroundImg, 0, 0, 1000, 500);
     player = new component(playerImg, 10, 400, 60, 60);
-    obstacle1 = new component(L3obstacle1Img, 160, 0, 60, 150);
-    obstacle2 = new component(L3obstacle2Img, 265, 0, 60, 150);
-    obstacle3 = new component(L3obstacle3Img, 370, 0, 60, 150);
-    obstacle4 = new component(L3obstacle4Img, 475, 0, 60, 150);
-    obstacle5 = new component(L3obstacle5Img, 580, 0, 60, 150);
-    obstacle6 = new component(L3obstacle6Img, 685, 0, 60, 150);
-    obstacle7 = new component(L3obstacle7Img, 790, 0, 60, 150);
+    obstacle1 = new component(l3obstacle1Img, 160, 0, 60, 150);
+    obstacle2 = new component(l3obstacle2Img, 265, 0, 60, 150);
+    obstacle3 = new component(l3obstacle3Img, 370, 0, 60, 150);
+    obstacle4 = new component(l3obstacle4Img, 475, 0, 60, 150);
+    obstacle5 = new component(l3obstacle5Img, 580, 0, 60, 150);
+    obstacle6 = new component(l3obstacle6Img, 685, 0, 60, 150);
+    obstacle7 = new component(l3obstacle7Img, 790, 0, 60, 150);
 }
 
 
@@ -577,8 +570,6 @@ function startLevel3() {
 let myGameAreaFinal = {
     canvas: document.getElementById("canvas"),
     start: function () {
-        this.canvas.width = 1000;
-        this.canvas.height = 500;
         this.context = this.canvas.getContext("2d");
         this.frameNo = 0;
         this.interval = setInterval(updateGameAreaFinal, 20);
@@ -590,7 +581,7 @@ let myGameAreaFinal = {
         })
     },
     clear: function () {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, 1000, 500);
     },
     stop: function () {
         clearInterval(this.interval);
@@ -598,11 +589,11 @@ let myGameAreaFinal = {
         this.clear()
         document.getElementById('tryagain').onclick = () => {
             gameOverSound.stop()
-            startLevelFinal();
+            startFinalLevel();
             gameOverText.style.visibility = "hidden"
-          };
+        };
     },
-    win: function (){
+    win: function () {
         clearInterval(this.interval)
         winScreenText.style.visibility = "visible"
         this.clear()
@@ -629,23 +620,23 @@ function moveObstaclesFinal(obstacleNum) {
 
 function checkCrashFinal() {
     if (player.crashWith(obstacle1) || player.crashWith(obstacle2) || player.crashWith(obstacle2b) || player.crashWith(obstacle3) || player.crashWith(obstacle4) || player.crashWith(obstacle4b) || player.crashWith(obstacle5) || player.crashWith(obstacle6) || player.crashWith(obstacle7) || player.crashWith(obstacle7b)) {
-        backgroundSound.stop();
+        finalLevelSound.stop();
         gameOverSound.sound.currentTime = 0;
         gameOverSound.play();
         myGameAreaFinal.stop();
-    } 
+    }
 }
 
-function checkGoalFinal(){
-    if (player.x >= 870){
-        backgroundSound.stop();
+function checkGoalFinal() {
+    if (player.x >= 870) {
+        finalLevelSound.stop();
         myGameAreaFinal.win();
     }
 }
 
 //------L4 UPDATES------//
 
-function upDateComponentsFinal(){
+function updateComponentsFinal() {
     myBackground.newPos();
     myBackground.update();
     player.newPos()
@@ -662,8 +653,8 @@ function upDateComponentsFinal(){
     obstacle7b.update();
 }
 
-function upDatePositionsFinal (){
-    movePlayer(); 
+function updatePositionsFinal() {
+    movePlayer();
     moveObstaclesFinal('1')
     moveObstaclesFinal('2')
     moveObstaclesFinal('2b')
@@ -680,28 +671,27 @@ function updateGameAreaFinal() {
     checkCrashFinal()
     checkGoalFinal()
     myGameAreaFinal.clear();
-    myGameAreaFinal.frameNo += 1; 
-    upDatePositionsFinal()
-    upDateComponentsFinal()
+    myGameAreaFinal.frameNo += 1;
+    updatePositionsFinal()
+    updateComponentsFinal()
 }
 
 //------L4 START------//
 
-function startLevelFinal() {
-    winnerSound = new sound("./sounds/winner-sound.mp3")
-    backgroundSound.currentTime = 0; 
-    backgroundSound.play()
+function startFinalLevel() {
+    finalLevelSound.currentTime = 0;
+    finalLevelSound.play()
     myGameAreaFinal.start();
     myBackground = new component(finalBackGroundImg, 0, 0, 1000, 500);
     player = new component(playerImg, 10, 400, 60, 60);
-    obstacle1 = new component(L4obstacle1Img, 160, 0, 50, 60);
-    obstacle2 = new component(L4obstacle2Img, 265, 0, 50, 60);
-    obstacle2b = new component(L4obstacle2bImg, 265, 250, 50, 60)
-    obstacle3 = new component(L4obstacle3Img, 370, 0, 50, 60);
-    obstacle4 = new component(L4obstacle4Img, 475, 0, 50, 60);
-    obstacle4b = new component(L4obstacle4bImg, 475, 250, 50, 60);
-    obstacle5 = new component(L4obstacle5Img, 580, 0, 50, 60);
-    obstacle6 = new component(L4obstacle6Img, 685, 0, 50, 60);
-    obstacle7 = new component(L4obstacle7Img, 790, 0, 50, 60);
-    obstacle7b = new component(L4obstacle7bImg, 790, 250, 50, 60);
+    obstacle1 = new component(l4obstacle1Img, 160, 0, 50, 60);
+    obstacle2 = new component(l4obstacle2Img, 265, 0, 50, 60);
+    obstacle2b = new component(l4obstacle2bImg, 265, 250, 50, 60)
+    obstacle3 = new component(l4obstacle3Img, 370, 0, 50, 60);
+    obstacle4 = new component(l4obstacle4Img, 475, 0, 50, 60);
+    obstacle4b = new component(l4obstacle4bImg, 475, 250, 50, 60);
+    obstacle5 = new component(l4obstacle5Img, 580, 0, 50, 60);
+    obstacle6 = new component(l4obstacle6Img, 685, 0, 50, 60);
+    obstacle7 = new component(l4obstacle7Img, 790, 0, 50, 60);
+    obstacle7b = new component(l4obstacle7bImg, 790, 250, 50, 60);
 }

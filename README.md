@@ -28,13 +28,13 @@ Game of skill and dexterity created in a canvas context with JavaScript, and vis
 - checkGoal()
 
 ### Update functions
-- upDateComponents()
-- upDatePositions()
+- updateComponents()
+- updatePositions()
 - updateGameArea()
 
 ## Requirements
 
-To play it is only necessary to open the game in a web browser. The game has been designed solely for PC so it is not functional for mobile phones or tablets.
+To play it is only necessary to open the game in a web browser, chrome or firefox, it doesn't work in internet explorer or edge. The game has been designed solely for PC so it is not functional for mobile phones or tablets.
 
 
 #### Click the following link to open the game: https://raquelrb.github.io/Crazy-crossing/

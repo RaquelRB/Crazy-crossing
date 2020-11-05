@@ -1,14 +1,11 @@
 body{
     font-family: Courier New;
+    background-image: url("./images/gameWallpaper.jpg");  
 }
 
 .game-intro{
     margin-top: 20px;
     margin-bottom: 20px;
-}
-
-body{
-    background-image: url("./images/fondopantalla2.jpg");    
 }
 
 #keys {
@@ -33,8 +30,7 @@ button img{
     font-size: 22px;
 }
 
-
-.game-over {
+.pop-up {
     position: absolute;
     margin: 150px 0;
     padding-top: 50px;
@@ -44,27 +40,3 @@ button img{
     border: 3px solid black;
     border-radius: 10px;
 }
-
-.level-up {
-    position: absolute;
-    margin: 150px 0;
-    padding-top: 50px;
-    width: 500px;
-    height: 250px;
-    background-color: rgba(229, 233, 229, .9);
-    border: 3px solid black;
-    border-radius: 10px;
-}
-
-.win-screen{
-    position: absolute;
-    margin: 150px 0;
-    padding-top: 50px;
-    width: 500px;
-    height: 250px;
-    background-color: rgba(229, 233, 229, .9);
-    border: 3px solid black;
-    border-radius: 10px;
-}
-
-
