@@ -427,6 +427,7 @@ window.onload = () => {
         clearInterval(this.interval);
         levelUpText.style.visibility = "visible"
         document.getElementById('continue').onclick = () => {
+            // levelUpSound.stop()
             startLevel3();
             levelUpText.style.visibility = "hidden"
           };
@@ -525,6 +526,14 @@ function startLevel2() {
 
 //------L3 FUNCTIONS-UPDATES------//
 
+function upDatePositions3 (){
+    player.newPos()
+    movePlayer();
+    for (let i=0; i<=7; i++){
+        moveObstacles3(`${i}`)
+    }  
+}
+
 function moveObstacles3(obstacleNum) {
     switch (obstacleNum) {
         case '1': (obstacle1.y > -150) ? (obstacle1.y -= 7) : (obstacle1.y = 450); break;
@@ -535,14 +544,6 @@ function moveObstacles3(obstacleNum) {
         case '6': (obstacle6.y < 500) ? (obstacle6.y += 10) : (obstacle6.y = -150); break;
         case '7': (obstacle7.y > -150) ? (obstacle7.y -= 10) : (obstacle7.y = 450);
     }
-}
-
-function upDatePositions3 (){
-    player.newPos()
-    movePlayer();
-    for (let i=0; i<=7; i++){
-        moveObstacles3(`${i}`)
-    }  
 }
 
 function updateGameArea3() {
@@ -610,7 +611,9 @@ let myGameAreaFinal = {
     }
 }
 
+
 //------L4 FUNCTIONS------//
+
 
 function moveObstaclesFinal(obstacleNum) {
     switch (obstacleNum) {
