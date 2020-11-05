@@ -57,10 +57,12 @@ function changeEffectsIcon() {
 }
 
 document.getElementById('mute-button').onclick = () => {
-    if (backgroundSound.sound.muted) {
+    if (backgroundSound.sound.muted && finalLevelSound.sound.muted) {
         backgroundSound.unmuted()
-    } else if (!backgroundSound.sound.muted) {
+        finalLevelSound.unmuted()
+    } else if (!backgroundSound.sound.muted && !finalLevelSound.sound.muted) {
         backgroundSound.muted()
+        finalLevelSound.muted()
     }
     changeMusicIcon()
 }
@@ -367,7 +369,6 @@ function startGame() {
     levelUpText.style.visibility = "hidden"
     gameOverText.style.visibility = "hidden"
     winScreenText.style.visibility = "hidden"
-    clearInterval(myGameArea.interval);
     levelUpSound.currentTime = 0;
     backgroundSound.currentTime = 0;
     backgroundSound.play()
@@ -637,9 +638,7 @@ function checkGoalFinal() {
 //------L4 UPDATES------//
 
 function updateComponentsFinal() {
-    myBackground.newPos();
     myBackground.update();
-    player.newPos()
     player.update()
     obstacle1.update();
     obstacle2.update();
@@ -654,6 +653,7 @@ function updateComponentsFinal() {
 }
 
 function updatePositionsFinal() {
+    player.newPos()
     movePlayer();
     moveObstaclesFinal('1')
     moveObstaclesFinal('2')
